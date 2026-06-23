@@ -1,0 +1,7 @@
+﻿safe_route_probe_status,tasks,false_acceptance,false_acceptance_rate
+extra_all_fail_divergence,1,1,1.0
+extra_no_bdc,3,2,0.667
+extra_pass_fail,6,3,0.5
+main_no_bdc,4,3,0.75
+main_pass_fail,6,3,0.5
+not_upgraded,10,5,0.5

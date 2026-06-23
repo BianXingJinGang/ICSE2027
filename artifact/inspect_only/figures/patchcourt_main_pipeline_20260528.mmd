@@ -1,0 +1,11 @@
+flowchart LR
+    A["Public issue and repo snapshot"] --> B["Candidate patch generation"]
+    B --> C["Apply candidates in isolated worktrees"]
+    C --> D["Visible-test filter"]
+    D --> E["Issue-derived probes"]
+    E --> F["Behavior signatures"]
+    F --> G["Behavior-disagreement certificates"]
+    G --> H["Manual audit and frozen index"]
+    H --> I["Held-out calibration"]
+    H --> J["Rerank and abstain analysis"]
+    K["Gold boundary: no developer patch, test patch, FAIL_TO_PASS, or PASS_TO_PASS before freeze"] -.-> H

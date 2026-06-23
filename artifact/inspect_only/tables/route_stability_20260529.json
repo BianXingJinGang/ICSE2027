@@ -1,0 +1,26 @@
+[
+  {
+    "layer": "Held-out FAIL_TO_PASS",
+    "before": "15/30 executable",
+    "after": "30/30 executable",
+    "paper_use": "Table heldout uses repaired post-freeze route; frozen index unchanged."
+  },
+  {
+    "layer": "Main probe upgrades",
+    "before": "2/10 upgraded BDC targets",
+    "after": "6/10 pass/fail BDC targets",
+    "paper_use": "Table upgrades uses final post-fix public issue/full-package probes."
+  },
+  {
+    "layer": "Frozen audit index",
+    "before": "30 conservative records",
+    "after": "30 conservative records",
+    "paper_use": "Frozen index unchanged after routing repairs."
+  },
+  {
+    "layer": "External baseline gate",
+    "before": "no checked API key or local model runtime",
+    "after": "direct-batch lane is append-only evidence only",
+    "paper_use": "Not reported as an independent external baseline."
+  }
+]

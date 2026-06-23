@@ -1,0 +1,57 @@
+﻿[
+  {
+    "abstain_count": 30,
+    "abstain_rate": 1.0,
+    "accept_count": 0,
+    "false_acceptance_capture_rate": 1.0,
+    "false_acceptances_captured": 17,
+    "residual_false_acceptance_rate": 0.0,
+    "residual_false_acceptances": 0,
+    "rule": "cc_ogb>=0.25",
+    "total_tasks": 30
+  },
+  {
+    "abstain_count": 5,
+    "abstain_rate": 0.16666666666666666,
+    "accept_count": 25,
+    "false_acceptance_capture_rate": 0.11764705882352941,
+    "false_acceptances_captured": 2,
+    "residual_false_acceptance_rate": 0.6,
+    "residual_false_acceptances": 15,
+    "rule": "cc_ogb>=0.50",
+    "total_tasks": 30
+  },
+  {
+    "abstain_count": 2,
+    "abstain_rate": 0.06666666666666667,
+    "accept_count": 28,
+    "false_acceptance_capture_rate": 0.058823529411764705,
+    "false_acceptances_captured": 1,
+    "residual_false_acceptance_rate": 0.5714285714285714,
+    "residual_false_acceptances": 16,
+    "rule": "cc_ogb>=0.75",
+    "total_tasks": 30
+  },
+  {
+    "abstain_count": 26,
+    "abstain_rate": 0.8666666666666667,
+    "accept_count": 4,
+    "false_acceptance_capture_rate": 1.0,
+    "false_acceptances_captured": 17,
+    "residual_false_acceptance_rate": 0.0,
+    "residual_false_acceptances": 0,
+    "rule": "specification_debt_signal",
+    "total_tasks": 30
+  },
+  {
+    "abstain_count": 30,
+    "abstain_rate": 1.0,
+    "accept_count": 0,
+    "false_acceptance_capture_rate": 1.0,
+    "false_acceptances_captured": 17,
+    "residual_false_acceptance_rate": 0.0,
+    "residual_false_acceptances": 0,
+    "rule": "spec_debt_or_cc_ogb>=0.25",
+    "total_tasks": 30
+  }
+]

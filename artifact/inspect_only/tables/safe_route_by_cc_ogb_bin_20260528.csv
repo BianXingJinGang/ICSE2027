@@ -1,0 +1,4 @@
+﻿cc_ogb_bin,tasks,false_acceptance,false_acceptance_rate
+0.25,25,15,0.6
+0.50,3,1,0.333
+0.75,2,1,0.5

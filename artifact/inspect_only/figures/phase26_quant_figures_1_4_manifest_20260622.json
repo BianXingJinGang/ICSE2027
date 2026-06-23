@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-06-22",
+  "phase": "phase27_structured_edit_inset_on_quantitative_figures_1_4",
+  "claim_boundary": "structured-edit presentation inset only; no empirical counts, task membership, or claim boundaries changed",
+  "source_tables": [
+    "tables/selection_funnel_20260529.csv",
+    "tables/table1_heldout_false_acceptance_20260526.csv",
+    "tables/route_stability_20260529.csv",
+    "paper text Matplotlib-24149 case counts: 4 visible-pass candidates, 3 probe-pass, 1 probe-fail"
+  ],
+  "figures": [
+    {
+      "figure": "Figure 1",
+      "stem": "patchcourt_running_example_20260622",
+      "role": "single-column case-level statistical bar for visible-pass candidate probe split"
+    },
+    {
+      "figure": "Figure 2",
+      "stem": "patchcourt_main_pipeline_20260622",
+      "role": "quantified protocol path, frozen-set outcome bars, and compact structured edit record inset"
+    },
+    {
+      "figure": "Figure 3",
+      "stem": "patchcourt_selection_funnel_20260622",
+      "role": "task-level denominator, audit split, and post-freeze calibration bars"
+    },
+    {
+      "figure": "Figure 4",
+      "stem": "patchcourt_certificate_evidence_ladder_20260622",
+      "role": "case-level probe split plus binary evidence matrix"
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+﻿{
+  "created_at": "2026-05-28",
+  "route": "safe_empirical_false_acceptance_characterization",
+  "title": "Visible Tests Are Not Oracles: Characterizing False Acceptance in LLM-Based Repository Repair",
+  "heldout_tasks": 30,
+  "heldout_false_acceptance": 17,
+  "summaries": {
+    "by_manual_audit_status": [
+      {
+        "manual_audit_status": "downgrade",
+        "tasks": 8,
+        "false_acceptance": 4,
+        "false_acceptance_rate": 0.5
+      },
+      {
+        "manual_audit_status": "retain",
+        "tasks": 22,
+        "false_acceptance": 13,
+        "false_acceptance_rate": 0.591
+      }
+    ],
+    "by_calibration_source": [
+      {
+        "calibration_source": "codex_session_bootstrap",
+        "tasks": 7,
+        "false_acceptance": 3,
+        "false_acceptance_rate": 0.429
+      },
+      {
+        "calibration_source": "llm_batch_direct",
+        "tasks": 23,
+        "false_acceptance": 14,
+        "false_acceptance_rate": 0.609
+      }
+    ],
+    "by_original_probe_layer": [
+      {
+        "original_probe_layer": "custom_active_probe",
+        "tasks": 3,
+        "false_acceptance": 0,
+        "false_acceptance_rate": 0.0
+      },
+      {
+        "original_probe_layer": "issue_codeblock_full_package",
+        "tasks": 1,
+        "false_acceptance": 0,
+        "false_acceptance_rate": 0.0
+      },
+      {
+        "original_probe_layer": "source_isolated_template",
+        "tasks": 26,
+        "false_acceptance": 17,
+        "false_acceptance_rate": 0.654
+      }
+    ],
+    "by_specification_debt_signal": [
+      {
+        "specification_debt_signal": "False",
+        "tasks": 4,
+        "false_acceptance": 0,
+        "false_acceptance_rate": 0.0
+      },
+      {
+        "specification_debt_signal": "True",
+        "tasks": 26,
+        "false_acceptance": 17,
+        "false_acceptance_rate": 0.654
+      }
+    ],
+    "by_cc_ogb_bin": [
+      {
+        "cc_ogb_bin": "0.25",
+        "tasks": 25,
+        "false_acceptance": 15,
+        "false_acceptance_rate": 0.6
+      },
+      {
+        "cc_ogb_bin": "0.50",
+        "tasks": 3,
+        "false_acceptance": 1,
+        "false_acceptance_rate": 0.333
+      },
+      {
+        "cc_ogb_bin": "0.75",
+        "tasks": 2,
+        "false_acceptance": 1,
+        "false_acceptance_rate": 0.5
+      }
+    ],
+    "by_safe_route_probe_status": [
+      {
+        "safe_route_probe_status": "extra_all_fail_divergence",
+        "tasks": 1,
+        "false_acceptance": 1,
+        "false_acceptance_rate": 1.0
+      },
+      {
+        "safe_route_probe_status": "extra_no_bdc",
+        "tasks": 3,
+        "false_acceptance": 2,
+        "false_acceptance_rate": 0.667
+      },
+      {
+        "safe_route_probe_status": "extra_pass_fail",
+        "tasks": 6,
+        "false_acceptance": 3,
+        "false_acceptance_rate": 0.5
+      },
+      {
+        "safe_route_probe_status": "main_no_bdc",
+        "tasks": 4,
+        "false_acceptance": 3,
+        "false_acceptance_rate": 0.75
+      },
+      {
+        "safe_route_probe_status": "main_pass_fail",
+        "tasks": 6,
+        "false_acceptance": 3,
+        "false_acceptance_rate": 0.5
+      },
+      {
+        "safe_route_probe_status": "not_upgraded",
+        "tasks": 10,
+        "false_acceptance": 5,
+        "false_acceptance_rate": 0.5
+      }
+    ],
+    "by_safe_route_qwen_status": [
+      {
+        "safe_route_qwen_status": "not_qwen_positive",
+        "tasks": 26,
+        "false_acceptance": 13,
+        "false_acceptance_rate": 0.5
+      },
+      {
+        "safe_route_qwen_status": "qwen_issue_specific",
+        "tasks": 1,
+        "false_acceptance": 1,
+        "false_acceptance_rate": 1.0
+      },
+      {
+        "safe_route_qwen_status": "qwen_package_integrity",
+        "tasks": 3,
+        "false_acceptance": 3,
+        "false_acceptance_rate": 1.0
+      }
+    ]
+  },
+  "top_cases": [
+    {
+      "task_id": "mwaskom__seaborn-3407",
+      "repo": "mwaskom/seaborn",
+      "score": 12,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "main_pass_fail",
+      "qwen_status": "qwen_issue_specific",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit;qwen_issue_specific"
+    },
+    {
+      "task_id": "scikit-learn__scikit-learn-10508",
+      "repo": "scikit-learn/scikit-learn",
+      "score": 11,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "main_pass_fail",
+      "qwen_status": "qwen_package_integrity",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit;qwen_package_integrity"
+    },
+    {
+      "task_id": "matplotlib__matplotlib-24149",
+      "repo": "matplotlib/matplotlib",
+      "score": 10,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "main_pass_fail",
+      "qwen_status": "not_qwen_positive",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit"
+    },
+    {
+      "task_id": "psf__requests-2148",
+      "repo": "psf/requests",
+      "score": 10,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "extra_pass_fail",
+      "qwen_status": "not_qwen_positive",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit"
+    },
+    {
+      "task_id": "pydata__xarray-4094",
+      "repo": "pydata/xarray",
+      "score": 10,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "extra_pass_fail",
+      "qwen_status": "not_qwen_positive",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit"
+    },
+    {
+      "task_id": "pylint-dev__pylint-7114",
+      "repo": "pylint-dev/pylint",
+      "score": 10,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "extra_pass_fail",
+      "qwen_status": "not_qwen_positive",
+      "reason": "heldout_false_acceptance;stronger_probe_pass_fail;retained_audit"
+    },
+    {
+      "task_id": "mwaskom__seaborn-3190",
+      "repo": "mwaskom/seaborn",
+      "score": 8,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "not_upgraded",
+      "qwen_status": "qwen_package_integrity",
+      "reason": "heldout_false_acceptance;retained_audit;qwen_package_integrity"
+    },
+    {
+      "task_id": "pallets__flask-5063",
+      "repo": "pallets/flask",
+      "score": 8,
+      "false_acceptance": true,
+      "manual_audit_status": "retain",
+      "probe_status": "extra_no_bdc",
+      "qwen_status": "qwen_package_integrity",
+      "reason": "heldout_false_acceptance;retained_audit;qwen_package_integrity"
+    }
+  ]
+}

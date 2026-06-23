@@ -1,0 +1,16 @@
+stage,count,source,boundary
+Pilot task substrate used for discovery,50,pilot50_drop_reasons_20260529.csv,pilot-50 task path
+Candidate patch slots from public contexts,200,pilot50_drop_reasons_20260529.csv,4 per pilot task
+Candidate records applied or carried as no-op after materialization repair,200,pilot_50_bottleneck_fix report summarized in table,"candidate records, not tasks"
+Candidate visible-command results,436,candidate_apply_visible_queue_20260525_082646_remote_summary,command-result rows
+Compatible visible-pass candidates / tasks,68 / 17,candidate_apply_visible_queue_20260525_082646_remote_summary,"compatible pass, not strict pass"
+Strict visible-pass candidates / tasks,8 / 2,candidate_apply_visible_queue_20260525_082646_remote_summary,strict visible-pass subset
+Raw certificate records consumed by audit index,37,certificate_audit_all_records_20260526.csv,raw records before task dedup
+Candidate-version executions represented in raw certificates,148,certificate_audit_all_records_20260526.csv,37 records x 4 candidates
+Deduplicated task records,31,certificate_audit_index_20260526.csv,one record per task
+Conservative pass/fail task records frozen,30,table1_heldout_false_acceptance_20260526.csv,paper-facing frozen set
+Broad records if all-fail divergence is included,31,certificate_audit_index_20260526.csv,includes one all-fail divergence
+Frozen original layers: source/custom/issue-code,26 / 3 / 1,table1_heldout_false_acceptance_20260526.csv,source-isolated dominance is explicit
+Frozen candidate-source split: direct-batch/Codex,23 / 7,table1_heldout_false_acceptance_20260526.csv,direct-batch is not external baseline
+Manual audit retain/downgrade/reject,22 / 8 / 0,table1_heldout_false_acceptance_20260526.csv,single structured audit pass
+Held-out executable after routing,30 / 30,table1_heldout_false_acceptance_20260526.csv,post-freeze calibration

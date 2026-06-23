@@ -1,0 +1,11 @@
+﻿task_id,repo,probe_id,probe_layer,probe_executions,pass_count,fail_count,timeout_count,upgrade_bdc_available,upgrade_behavior_group_count,upgrade_cc_ogb_lower_bound,certificate_id
+marshmallow-code__marshmallow-1343,marshmallow-code/marshmallow,upgrade-fullpkg-marshmallow-nested-invalid-validate,full_package_behavioral_probe,4,2,2,0,True,3,0.5,marshmallow-code__marshmallow-1343::upgrade-fullpkg-marshmallow-nested-invalid-validate::45bee22438ea
+marshmallow-code__marshmallow-1359,marshmallow-code/marshmallow,upgrade-fullpkg-marshmallow-list-datetime-load,full_package_behavioral_probe,4,4,0,0,False,0,0.0,
+mwaskom__seaborn-2848,mwaskom/seaborn,upgrade-fullpkg-seaborn-pairplot-hue-order-filter,full_package_behavioral_probe,4,0,4,0,True,2,0.0,mwaskom__seaborn-2848::upgrade-fullpkg-seaborn-pairplot-hue-order-filter::a00ae0775a3e
+pallets__flask-4992,pallets/flask,upgrade-fullpkg-flask-config-from-file-mode,full_package_behavioral_probe,4,2,2,0,True,2,0.5,pallets__flask-4992::upgrade-fullpkg-flask-config-from-file-mode::ea3d4feab212
+pallets__flask-5063,pallets/flask,upgrade-fullpkg-flask-routes-subdomain-column,full_package_behavioral_probe,4,0,4,0,False,0,0.0,
+psf__requests-2148,psf/requests,upgrade-fullpkg-requests-socket-error-wrapped,full_package_behavioral_probe,4,2,2,0,True,3,0.5,psf__requests-2148::upgrade-fullpkg-requests-socket-error-wrapped::e932f1c7454d
+pvlib__pvlib-python-1072,pvlib/pvlib-python,upgrade-fullpkg-pvlib-fuentes-tz-aware-index,full_package_behavioral_probe,4,3,1,0,True,2,0.25,pvlib__pvlib-python-1072::upgrade-fullpkg-pvlib-fuentes-tz-aware-index::cd30c1d7f12f
+pydata__xarray-4094,pydata/xarray,upgrade-fullpkg-xarray-unstacked-dataset-drop-level-coord,full_package_behavioral_probe,4,3,1,0,True,2,0.25,pydata__xarray-4094::upgrade-fullpkg-xarray-unstacked-dataset-drop-level-coord::b77786865f9c
+pylint-dev__pylint-6506,pylint-dev/pylint,upgrade-fullpkg-pylint-unrecognized-option-no-traceback,full_package_behavioral_probe,4,0,4,0,False,0,0.0,
+pylint-dev__pylint-7114,pylint-dev/pylint,upgrade-fullpkg-pylint-namespace-no-missing-init,full_package_behavioral_probe,4,3,1,0,True,4,0.25,pylint-dev__pylint-7114::upgrade-fullpkg-pylint-namespace-no-missing-init::001dea940168

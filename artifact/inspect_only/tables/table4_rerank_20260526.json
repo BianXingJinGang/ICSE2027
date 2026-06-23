@@ -1,0 +1,98 @@
+﻿[
+  {
+    "false_acceptances_found": 2,
+    "k": 5,
+    "precision_at_k": 0.4,
+    "recall_at_k": 0.11764705882352941,
+    "reviewed": 5,
+    "score": "risk_cc_only"
+  },
+  {
+    "false_acceptances_found": 4,
+    "k": 10,
+    "precision_at_k": 0.4,
+    "recall_at_k": 0.23529411764705882,
+    "reviewed": 10,
+    "score": "risk_cc_only"
+  },
+  {
+    "false_acceptances_found": 8,
+    "k": 15,
+    "precision_at_k": 0.5333333333333333,
+    "recall_at_k": 0.47058823529411764,
+    "reviewed": 15,
+    "score": "risk_cc_only"
+  },
+  {
+    "false_acceptances_found": 11,
+    "k": 20,
+    "precision_at_k": 0.55,
+    "recall_at_k": 0.6470588235294118,
+    "reviewed": 20,
+    "score": "risk_cc_only"
+  },
+  {
+    "false_acceptances_found": 2,
+    "k": 5,
+    "precision_at_k": 0.4,
+    "recall_at_k": 0.11764705882352941,
+    "reviewed": 5,
+    "score": "risk_cc_plus_debt"
+  },
+  {
+    "false_acceptances_found": 5,
+    "k": 10,
+    "precision_at_k": 0.5,
+    "recall_at_k": 0.29411764705882354,
+    "reviewed": 10,
+    "score": "risk_cc_plus_debt"
+  },
+  {
+    "false_acceptances_found": 9,
+    "k": 15,
+    "precision_at_k": 0.6,
+    "recall_at_k": 0.5294117647058824,
+    "reviewed": 15,
+    "score": "risk_cc_plus_debt"
+  },
+  {
+    "false_acceptances_found": 13,
+    "k": 20,
+    "precision_at_k": 0.65,
+    "recall_at_k": 0.7647058823529411,
+    "reviewed": 20,
+    "score": "risk_cc_plus_debt"
+  },
+  {
+    "false_acceptances_found": 2,
+    "k": 5,
+    "precision_at_k": 0.4,
+    "recall_at_k": 0.11764705882352941,
+    "reviewed": 5,
+    "score": "risk_audit_weighted"
+  },
+  {
+    "false_acceptances_found": 6,
+    "k": 10,
+    "precision_at_k": 0.6,
+    "recall_at_k": 0.35294117647058826,
+    "reviewed": 10,
+    "score": "risk_audit_weighted"
+  },
+  {
+    "false_acceptances_found": 9,
+    "k": 15,
+    "precision_at_k": 0.6,
+    "recall_at_k": 0.5294117647058824,
+    "reviewed": 15,
+    "score": "risk_audit_weighted"
+  },
+  {
+    "false_acceptances_found": 13,
+    "k": 20,
+    "precision_at_k": 0.65,
+    "recall_at_k": 0.7647058823529411,
+    "reviewed": 20,
+    "score": "risk_audit_weighted"
+  }
+]

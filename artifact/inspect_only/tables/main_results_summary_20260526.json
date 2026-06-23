@@ -1,0 +1,28 @@
+﻿{
+  "created_at": "2026-05-26T14:07:33Z",
+  "external_model_baseline_classification": "append_only_direct_batch_lane_only",
+  "external_model_baseline_ready": false,
+  "extra_full_package_bdc_pass_fail_task_count": 6,
+  "extra_full_package_bdc_queue": "bdc_queue_20260526_140640",
+  "extra_full_package_bdc_task_count": 7,
+  "extra_full_package_probe_execution_count": 40,
+  "extra_full_package_probe_queue": "audit_probe_upgrade_queue_20260526_140600",
+  "extra_full_package_probe_target_count": 10,
+  "false_acceptance_false": 13,
+  "false_acceptance_true": 17,
+  "gold_boundary": "held-out labels were read only after frozen_certificate_index_20260526.json was written",
+  "heldout_executable": 30,
+  "heldout_queue": "heldout_calibration_queue_20260526_124819",
+  "heldout_records": 30,
+  "specification_debt_signal": 26,
+  "upgrade_bdc_pass_fail_task_count": 6,
+  "upgrade_bdc_queue": "bdc_queue_20260526_131207",
+  "upgrade_bdc_task_count": 6,
+  "upgrade_probe_execution_count": 40,
+  "upgrade_probe_layer_counts": {
+    "full_package_behavioral_probe": 24,
+    "issue_codeblock_full_package": 16
+  },
+  "upgrade_probe_queue": "audit_probe_upgrade_queue_20260526_131117",
+  "upgrade_probe_target_count": 10
+}

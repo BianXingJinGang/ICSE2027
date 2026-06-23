@@ -1,0 +1,11 @@
+﻿task_id,repo,probe_id,probe_layer,probe_executions,pass_count,fail_count,timeout_count,upgrade_bdc_available,upgrade_behavior_group_count,upgrade_cc_ogb_lower_bound,certificate_id
+astropy__astropy-14365,astropy/astropy,upgrade-fullpkg-astropy-qdp-lowercase-read,full_package_behavioral_probe,4,0,4,0,False,0,0.0,
+django__django-16255,django/django,upgrade-fullpkg-django-empty-sitemap-lastmod,full_package_behavioral_probe,4,3,1,0,True,2,0.25,django__django-16255::upgrade-fullpkg-django-empty-sitemap-lastmod::57386192cdec
+django__django-16873,django/django,upgrade-fullpkg-django-join-autoescape-off,full_package_behavioral_probe,4,3,1,0,True,2,0.25,django__django-16873::upgrade-fullpkg-django-join-autoescape-off::3f215078cc87
+matplotlib__matplotlib-24149,matplotlib/matplotlib,upgrade-fullpkg-matplotlib-bar-all-nan,full_package_behavioral_probe,4,3,1,0,True,2,0.25,matplotlib__matplotlib-24149::upgrade-fullpkg-matplotlib-bar-all-nan::6d71aa269334
+mwaskom__seaborn-3407,mwaskom/seaborn,upgrade-fullpkg-seaborn-pairplot-multiindex,full_package_behavioral_probe,4,3,1,0,True,2,0.25,mwaskom__seaborn-3407::upgrade-fullpkg-seaborn-pairplot-multiindex::c360f3811a8c
+pytest-dev__pytest-11148,pytest-dev/pytest,upgrade-issuecode-pytest-importlib-namespace,issue_codeblock_full_package,4,4,0,0,False,0,0.0,
+pytest-dev__pytest-8906,pytest-dev/pytest,upgrade-issuecode-pytest-module-skip-message,issue_codeblock_full_package,4,4,0,0,False,0,0.0,
+scikit-learn__scikit-learn-10508,scikit-learn/scikit-learn,upgrade-fullpkg-sklearn-labelencoder-empty-transform,full_package_behavioral_probe,4,3,1,0,True,2,0.25,scikit-learn__scikit-learn-10508::upgrade-fullpkg-sklearn-labelencoder-empty-transform::40b7bfac5420
+sympy__sympy-17655,sympy/sympy,upgrade-issuecode-sympy-point-left-scalar,issue_codeblock_full_package,4,0,4,0,False,0,0.0,
+sympy__sympy-23117,sympy/sympy,upgrade-issuecode-sympy-empty-array,issue_codeblock_full_package,4,3,1,0,True,2,0.25,sympy__sympy-23117::upgrade-issuecode-sympy-empty-array::659ab52dbadd

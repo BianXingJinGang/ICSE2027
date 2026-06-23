@@ -1,0 +1,5 @@
+layer,before,after,paper_use
+Held-out FAIL_TO_PASS,15/30 executable,30/30 executable,Table heldout uses repaired post-freeze route; frozen index unchanged.
+Main probe upgrades,2/10 upgraded BDC targets,6/10 pass/fail BDC targets,Table upgrades uses final post-fix public issue/full-package probes.
+Frozen audit index,30 conservative records,30 conservative records,Frozen index unchanged after routing repairs.
+External baseline gate,no checked API key or local model runtime,direct-batch lane is append-only evidence only,Not reported as an independent external baseline.

@@ -1,0 +1,92 @@
+[
+  {
+    "stage": "Pilot task substrate used for discovery",
+    "count": "50",
+    "source": "pilot50_drop_reasons_20260529.csv",
+    "boundary": "pilot-50 task path"
+  },
+  {
+    "stage": "Candidate patch slots from public contexts",
+    "count": "200",
+    "source": "pilot50_drop_reasons_20260529.csv",
+    "boundary": "4 per pilot task"
+  },
+  {
+    "stage": "Candidate records applied or carried as no-op after materialization repair",
+    "count": "200",
+    "source": "pilot_50_bottleneck_fix report summarized in table",
+    "boundary": "candidate records, not tasks"
+  },
+  {
+    "stage": "Candidate visible-command results",
+    "count": "436",
+    "source": "candidate_apply_visible_queue_20260525_082646_remote_summary",
+    "boundary": "command-result rows"
+  },
+  {
+    "stage": "Compatible visible-pass candidates / tasks",
+    "count": "68 / 17",
+    "source": "candidate_apply_visible_queue_20260525_082646_remote_summary",
+    "boundary": "compatible pass, not strict pass"
+  },
+  {
+    "stage": "Strict visible-pass candidates / tasks",
+    "count": "8 / 2",
+    "source": "candidate_apply_visible_queue_20260525_082646_remote_summary",
+    "boundary": "strict visible-pass subset"
+  },
+  {
+    "stage": "Raw certificate records consumed by audit index",
+    "count": "37",
+    "source": "certificate_audit_all_records_20260526.csv",
+    "boundary": "raw records before task dedup"
+  },
+  {
+    "stage": "Candidate-version executions represented in raw certificates",
+    "count": "148",
+    "source": "certificate_audit_all_records_20260526.csv",
+    "boundary": "37 records x 4 candidates"
+  },
+  {
+    "stage": "Deduplicated task records",
+    "count": "31",
+    "source": "certificate_audit_index_20260526.csv",
+    "boundary": "one record per task"
+  },
+  {
+    "stage": "Conservative pass/fail task records frozen",
+    "count": "30",
+    "source": "table1_heldout_false_acceptance_20260526.csv",
+    "boundary": "paper-facing frozen set"
+  },
+  {
+    "stage": "Broad records if all-fail divergence is included",
+    "count": "31",
+    "source": "certificate_audit_index_20260526.csv",
+    "boundary": "includes one all-fail divergence"
+  },
+  {
+    "stage": "Frozen original layers: source/custom/issue-code",
+    "count": "26 / 3 / 1",
+    "source": "table1_heldout_false_acceptance_20260526.csv",
+    "boundary": "source-isolated dominance is explicit"
+  },
+  {
+    "stage": "Frozen candidate-source split: direct-batch/Codex",
+    "count": "23 / 7",
+    "source": "table1_heldout_false_acceptance_20260526.csv",
+    "boundary": "direct-batch is not external baseline"
+  },
+  {
+    "stage": "Manual audit retain/downgrade/reject",
+    "count": "22 / 8 / 0",
+    "source": "table1_heldout_false_acceptance_20260526.csv",
+    "boundary": "single structured audit pass"
+  },
+  {
+    "stage": "Held-out executable after routing",
+    "count": "30 / 30",
+    "source": "table1_heldout_false_acceptance_20260526.csv",
+    "boundary": "post-freeze calibration"
+  }
+]

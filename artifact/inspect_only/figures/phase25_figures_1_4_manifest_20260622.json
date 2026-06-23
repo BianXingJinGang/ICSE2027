@@ -1,0 +1,27 @@
+{
+  "created_at": "2026-06-22",
+  "phase": "phase25_figures_1_4_upgrade",
+  "claim_boundary": "visual redesign only; no empirical counts, task membership, or claim boundaries changed",
+  "figures": [
+    {
+      "figure": "Figure 1",
+      "stem": "patchcourt_running_example_20260622",
+      "role": "code-level public probe plus visible-pass candidate behavior split"
+    },
+    {
+      "figure": "Figure 2",
+      "stem": "patchcourt_main_pipeline_20260622",
+      "role": "protocol pipeline with explicit freeze and gold boundary"
+    },
+    {
+      "figure": "Figure 3",
+      "stem": "patchcourt_selection_funnel_20260622",
+      "role": "selected certificate-producing path and calibration denominator"
+    },
+    {
+      "figure": "Figure 4",
+      "stem": "patchcourt_certificate_evidence_ladder_20260622",
+      "role": "Matplotlib certificate-level evidence chain"
+    }
+  ]
+}

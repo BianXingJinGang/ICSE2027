@@ -1,0 +1,11 @@
+flowchart TB
+    A["Visible pass"] --> B["Source-isolated probe BDC"]
+    B --> C["Issue-code probe BDC"]
+    C --> D["Full-package issue probe BDC"]
+    D --> E["Full-package integrity BDC"]
+    D --> F["Post-freeze held-out FAIL_TO_PASS"]
+    B -. "risk evidence" .-> G["Rerank / review / abstain"]
+    C -. "stronger risk evidence" .-> G
+    D -. "strongest pre-freeze issue evidence" .-> G
+    E -. "regression or package damage evidence" .-> G
+    F -. "evaluation label, not used pre-freeze" .-> H["Calibration"]
