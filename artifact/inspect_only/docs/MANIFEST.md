@@ -85,6 +85,10 @@ Raw local project logs (`docs/RESTART.md`, `WORKLOG.md`, `DECISIONS.md`, `NEXT_S
 - `paper/icse2027/assets_20260628_subject_aligned_patch_record/phase31_subject_aligned_patch_record_acceptance_audit_20260628.md`
 - `reports/phase31_subject_aligned_patch_record_report_20260628.md`
 - `reports/phase31_subject_aligned_patch_record_acceptance_audit_20260628.md`
+- `paper/icse2027/assets_20260629_core_claim_code_record/phase32_core_claim_code_record_report_20260629.md`
+- `paper/icse2027/assets_20260629_core_claim_code_record/phase32_core_claim_code_record_acceptance_audit_20260629.md`
+- `reports/phase32_core_claim_code_record_report_20260629.md`
+- `reports/phase32_core_claim_code_record_acceptance_audit_20260629.md`
 - `paper/icse2027/assets_20260622_figures14_upgrade/figures/*.pdf`
 - `paper/icse2027/assets_20260622_figures14_upgrade/figures/*.png`
 - `paper/icse2027/assets_20260622_figures14_upgrade/phase25_figures_1_4_manifest_20260622.json`

@@ -23,5 +23,6 @@ This root index makes the inspect-only package self-contained for artifact revie
 - Inspect `figures/phase25_figures_1_4_manifest_20260622.json` only for historical Phase 25 figure provenance.
 - Inspect `figures/patchcourt_quantitative_figure_manifest_20260622.json` to map the new statistical figures to their source tables.
 - Inspect `reports/phase31_subject_aligned_patch_record_report_20260628.md` to see how the standalone listing now supports the Matplotlib false-acceptance evidence chain rather than a generic patch schema.
+- Inspect `reports/phase32_core_claim_code_record_report_20260629.md` to see how Figure 2 now names the core PatchCourt evidence object directly.
 
 The detailed source-to-package manifest remains in `docs/MANIFEST.md`.
