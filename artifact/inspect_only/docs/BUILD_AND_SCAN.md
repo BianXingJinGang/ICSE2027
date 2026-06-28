@@ -12,11 +12,11 @@ Target directory:
 
 Archive:
 
-- `paper/icse2027/artifact_bundle_anonymous_20260528/patchcourt_icse2027_anonymous_inspect_only_20260628_structpatch.zip`
+- `paper/icse2027/artifact_bundle_anonymous_20260528/patchcourt_icse2027_anonymous_inspect_only_20260628_subjectpatch.zip`
 
 Current generated package:
 
-- Files in inspect-only directory: 130.
+- Files in inspect-only directory: 131.
 - The archive is rebuilt from this directory after the Level 1 verifier and secret/anonymity scan pass. Exact archive bytes and SHA256 are recorded in the outer `SECRET_SCAN_REPORT_20260528.md` after rebuild to avoid self-referential hash drift inside the ZIP.
 
 Included categories:
@@ -25,7 +25,7 @@ Included categories:
 - Main result tables from `main_results_20260526/`.
 - Paper-facing table packs, safe-route characterization files, Qwen audit, related-work source notes, and polished cases.
 - Pilot-50 drop-reason table, selection-funnel table, and route-stability table.
-- Current main-paper figure PDFs, the Phase 26 quantitative Figure 1-4 redesign assets with the Phase 27 structured-edit inset, the Phase 30 structured patch-record listing in LaTeX, figure provenance inputs, and the 2026-06-22 quantitative chart pack.
+- Current main-paper figure PDFs, the Phase 26 quantitative Figure 1-4 redesign assets with the Phase 27 structured-edit inset, the Phase 31 subject-aligned Matplotlib ledger record in LaTeX, figure provenance inputs, and the 2026-06-22 quantitative chart pack.
 - Active IEEE LaTeX source, BibTeX, PDF, and build README.
 - Phase 2 reference/anonymity/PDF integrity report and Phase 3 acceptance-gauntlet repair reports.
 - Selected table-builder scripts plus `scripts/verify_level1_tables_20260528.py` for Level 1 headline-count, pilot-50, selection-funnel, and route-stability regeneration/comparison.
@@ -61,5 +61,5 @@ Latest scan result:
 - Raw remote-root paths in copied evidence were replaced with `<REMOTE_ROOT>` inside the package copy.
 - Environment variable names such as `OPENAI_API_KEY`, `HF_TOKEN`, and `HUGGINGFACE_HUB_TOKEN` remain in scripts as configuration names, not secret values.
 - The string `hf_router_chat` is a backend name and can match broad token-prefix scans; it is not a credential.
-- The exact Phase 30 rebuilt ZIP is extracted into a clean-room directory during final validation; Level 1 verification and LaTeX rebuild both pass.
-- The Phase 30 critical secret/path scan passes on both the curated artifact directory and ZIP bytes after separating real token forms from benign task/probe names such as `flask-*`.
+- The exact Phase 31 rebuilt ZIP is extracted into a clean-room directory during final validation; Level 1 verification and LaTeX rebuild both pass.
+- The Phase 31 critical secret/path scan passes on both the curated artifact directory and ZIP bytes after separating real token forms from benign task/probe names such as `flask-*`.

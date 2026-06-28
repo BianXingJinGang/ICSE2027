@@ -176,33 +176,27 @@ This split is the certificate: a cheap, executable record that visible tests adm
 \patchcourt is a measurement and audit protocol for visible-passing repository patches.
 Figure~\ref{fig:pipeline} shows the main flow with the counted objects at each stage: candidate sources produce patches, visible tests define the accepted-looking pool, public probes measure behavior before freeze, the certificate index is audited and frozen, and held-out labels are read only afterward.
 The output is an evidence ledger whose rows bind a task, candidate source, probe layer, behavior signature, audit label, and calibration outcome.
-Figure~\ref{fig:structured-patch-record} shows the normalized edit-record interface used for deterministic application, route logging, and later certificate linkage.
+Figure~\ref{fig:structured-patch-record} shows this object for the Matplotlib all-\texttt{NaN} running case: the edit is only the entry point; visible-test status, public-probe disagreement, audit status, and post-freeze calibration make it paper evidence.
 
 \begin{figure}[t]
 \begin{lstlisting}[style=patchcourtpatch]
 [
-  {
-    "task_id": "matplotlib__matplotlib-24149",
-    "file_path": "lib/matplotlib/axes/_axes.py",
-    "insertions": [
-      {"line_number": 2418,
-       "new_lines": [
-         "# ... issue-specific guard ...\n",
-         "if _all_nan_bar_input(height):\n",
-         "    return _nan_bar_container(...)\n"]}
-    ],
-    "deletions": [2418],
-    "modifications": [
-      {"line_number": 2421,
-       "modified_line":
-         "height = np.asarray(height, float)\n"}
-    ],
-    "evidence": {"visible": "pass", "probe": "pending"}
-  }
+ {"task": "Matplotlib-24149", "case": "all-NaN bar",
+  "file_path": "lib/matplotlib/axes/_axes.py",
+  "insertions": [{"line_number": 2418,
+    "new_lines": ["if _all_nan_bar_input(height):\n",
+                  "    return _nan_bar_container(...)\n"]}],
+  "deletions": [2418],
+  "modifications": [{"line_number": 2421,
+    "modified_line": "height = np.asarray(height, float)\n"}],
+  "visible": "pass",
+  "probe": "full-package all-NaN bar: 3 pass / 1 fail",
+  "certificate": "pass_fail_bdc; audit=retain; spec_debt",
+  "held_out": "false_acceptance"}
 ]
 \end{lstlisting}
-  \caption{Example normalized patch record consumed before visible-test and probe execution; shortened for display.}
-  \Description{JSON-like patch record with a task id, file path, insertions, deletions, modifications, and pre-freeze evidence placeholders.}
+  \caption{Ledger-ready Matplotlib record. The same object carries the patch, visible-pass status, public-probe split, audit label, and later false-acceptance calibration.}
+  \Description{JSON-like PatchCourt record for the Matplotlib all-NaN bar-plot case. It includes a file edit, visible-test pass status, a three-versus-one public-probe split, retain audit label, specification-debt marker, and false-acceptance calibration label.}
   \label{fig:structured-patch-record}
 \end{figure}
 

@@ -22,5 +22,6 @@ This root index makes the inspect-only package self-contained for artifact revie
 - Inspect `figures/phase26_quant_figures_1_4_manifest_20260622.json` to map the quantitative Figures 1-4 to their paper roles; its phase records the Phase 27 structured-edit inset in Figure 2.
 - Inspect `figures/phase25_figures_1_4_manifest_20260622.json` only for historical Phase 25 figure provenance.
 - Inspect `figures/patchcourt_quantitative_figure_manifest_20260622.json` to map the new statistical figures to their source tables.
+- Inspect `reports/phase31_subject_aligned_patch_record_report_20260628.md` to see how the standalone listing now supports the Matplotlib false-acceptance evidence chain rather than a generic patch schema.
 
 The detailed source-to-package manifest remains in `docs/MANIFEST.md`.

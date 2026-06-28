@@ -23,6 +23,7 @@ Prepare an ICSE 2027 double-blind submission for PatchCourt, a gold-boundary-awa
 - Phase 27 structured-edit inset: Figure 2 includes a compact JSON-like edit-record strip that shows how candidate edits are represented before probe evidence and ledger freeze. This is presentation-only and does not change any count, task membership, or claim boundary.
 - Phase 28 abstract/example block: the abstract now names the broader pipeline scale (50 tasks, 200 candidate slots, 68 visible-pass candidates, 37 raw certificates) while retaining the 30-record calibrated selected path; the PatchCourt overview includes a compact edit-record code block. This is presentation-only.
 - Phase 30 structured patch-record listing: the compact edit-record block is replaced by a formal single-column listing with `file_path`, `insertions`, `deletions`, and `modifications` fields. This is presentation-only and does not change any count, task membership, or claim boundary.
+- Phase 31 subject-aligned patch-record listing: the formal listing is tightened around the Matplotlib all-NaN false-acceptance running case. The record carries the candidate edit, visible-pass status, full-package public-probe split, pass/fail BDC label, retain/specification-debt audit label, and post-freeze false-acceptance calibration. This is presentation-only and does not change any count, task membership, or claim boundary.
 
 ## Independent-Source Stress Test
 
@@ -67,7 +68,7 @@ Not claimable:
 ## Validation Status
 
 - The active LaTeX submission draft is the IEEEtran lane copied into `latex/` inside this artifact package.
-- The active PDF is 12 pages after the Phase 30 structured patch-record update, with an expanded 66-reference bibliography, a Running Example code panel, and a compact quantitative result summary.
+- The active PDF is 12 pages after the Phase 31 subject-aligned patch-record update, with an expanded 66-reference bibliography, a Running Example code panel, and a compact quantitative result summary.
 - The latest acceptance audit reports 103/103 with no heuristic warnings.
 - The Level 1 verifier now checks 44 metrics, including headline counts, source/probe stratification, pilot-50 drop reasons, selection-funnel values, and route-stability values.
 - The inspect-only artifact package is curated rather than a raw repository dump.

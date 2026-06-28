@@ -24,5 +24,6 @@ The verifier recomputes the headline table counts, selection funnel, route-stabi
 - `figures/phase26_quant_figures_1_4_manifest_20260622.json`: source-to-role map for the quantitative Figures 1-4; the manifest phase records the Phase 27 structured-edit inset added to Figure 2.
 - `figures/phase25_figures_1_4_manifest_20260622.json`: historical source-to-role map for the prior upgraded Figures 1-4.
 - `figures/patchcourt_quantitative_figure_manifest_20260622.json`: source-to-chart map for the quantitative figure pack.
+- `reports/phase31_subject_aligned_patch_record_report_20260628.md`: explains the subject-aligned Matplotlib ledger record added to the manuscript.
 
 PatchCourt is an audit and triage protocol, not a correctness oracle. The artifact is organized to make the selected certificate-producing path, candidate provenance, probe provenance, audit decisions, and post-freeze calibration inspectable.
