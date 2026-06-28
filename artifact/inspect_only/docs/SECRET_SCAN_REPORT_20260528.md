@@ -1,15 +1,15 @@
 # Secret and Anonymization Scan Report
 
-Last updated: 2026-06-23.
+Last updated: 2026-06-28.
 
 Scope:
 
 - The curated inspect-only artifact directory.
-- The anonymous ZIP rebuilt from that directory after the Phase 28 abstract/example-block update and sanitization.
+- The anonymous ZIP rebuilt from that directory after the Phase 30 structured patch-record update and sanitization.
 
 Package summary:
 
-- Files in inspect-only directory: 128.
+- Files in inspect-only directory: 130.
 - Exact ZIP bytes and SHA256 are recorded in the outer packaging report after rebuild. They are intentionally not embedded inside this file, because this file is part of the ZIP payload and would otherwise change the ZIP hash.
 
 Critical secret scan:

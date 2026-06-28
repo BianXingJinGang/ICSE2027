@@ -18,6 +18,7 @@ The artifact supports inspection and table regeneration for:
 - paper tables and figures,
 - Phase 27 structured-edit inset on the quantified protocol figure,
 - Phase 28 abstract sample framing and compact edit-record code block,
+- Phase 30 full structured patch-record listing in the main paper,
 - quantitative Figure 1-4 redesign assets,
 - redesigned Figures 1-4 generated for the submission-facing paper,
 - quantitative statistical figures generated from the frozen paper tables.
@@ -39,7 +40,7 @@ See `MANIFEST.md` for the file list, `CLAIM_BOUNDARIES.md` for what each evidenc
 
 The current generated inspect-only archive is:
 
-- `patchcourt_icse2027_anonymous_inspect_only_20260623_abstract_example.zip`
+- `patchcourt_icse2027_anonymous_inspect_only_20260628_structpatch.zip`
 
 ## Anonymization Rules
 

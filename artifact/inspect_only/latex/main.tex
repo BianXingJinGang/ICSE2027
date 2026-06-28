@@ -11,6 +11,12 @@
 \usepackage{url}
 \usepackage{listings}
 
+\setlength{\textfloatsep}{7pt plus 1pt minus 2pt}
+\setlength{\floatsep}{7pt plus 1pt minus 2pt}
+\setlength{\intextsep}{7pt plus 1pt minus 2pt}
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\belowcaptionskip}{0pt}
+
 \lstdefinestyle{patchcourtcode}{
   basicstyle=\ttfamily\scriptsize,
   columns=fullflexible,
@@ -32,6 +38,18 @@
   xrightmargin=0pt,
   aboveskip=1pt,
   belowskip=1pt
+}
+\lstdefinestyle{patchcourtpatch}{
+  basicstyle=\ttfamily\fontsize{5.6}{6.0}\selectfont,
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  frame=tb,
+  framerule=0.35pt,
+  xleftmargin=2pt,
+  xrightmargin=2pt,
+  aboveskip=0pt,
+  belowskip=0pt
 }
 
 \newcommand{\patchcourt}{PatchCourt\xspace}
@@ -158,12 +176,35 @@ This split is the certificate: a cheap, executable record that visible tests adm
 \patchcourt is a measurement and audit protocol for visible-passing repository patches.
 Figure~\ref{fig:pipeline} shows the main flow with the counted objects at each stage: candidate sources produce patches, visible tests define the accepted-looking pool, public probes measure behavior before freeze, the certificate index is audited and frozen, and held-out labels are read only afterward.
 The output is an evidence ledger whose rows bind a task, candidate source, probe layer, behavior signature, audit label, and calibration outcome.
-A compact edit record has the following shape:
-\begin{lstlisting}[style=patchcourtmini]
-{task:"matplotlib-24149", source:"model",
- edit:{file:".../_axes.py", replace:["old","candidate"]},
- evidence:{visible:"pass", probe:"pending"}}
+Figure~\ref{fig:structured-patch-record} shows the normalized edit-record interface used for deterministic application, route logging, and later certificate linkage.
+
+\begin{figure}[t]
+\begin{lstlisting}[style=patchcourtpatch]
+[
+  {
+    "task_id": "matplotlib__matplotlib-24149",
+    "file_path": "lib/matplotlib/axes/_axes.py",
+    "insertions": [
+      {"line_number": 2418,
+       "new_lines": [
+         "# ... issue-specific guard ...\n",
+         "if _all_nan_bar_input(height):\n",
+         "    return _nan_bar_container(...)\n"]}
+    ],
+    "deletions": [2418],
+    "modifications": [
+      {"line_number": 2421,
+       "modified_line":
+         "height = np.asarray(height, float)\n"}
+    ],
+    "evidence": {"visible": "pass", "probe": "pending"}
+  }
+]
 \end{lstlisting}
+  \caption{Example normalized patch record consumed before visible-test and probe execution; shortened for display.}
+  \Description{JSON-like patch record with a task id, file path, insertions, deletions, modifications, and pre-freeze evidence placeholders.}
+  \label{fig:structured-patch-record}
+\end{figure}
 
 \begin{figure*}[t]
   \centering
