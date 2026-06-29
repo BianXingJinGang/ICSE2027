@@ -5,11 +5,11 @@ Last updated: 2026-06-29.
 Scope:
 
 - The curated inspect-only artifact directory.
-- The anonymous ZIP rebuilt from that directory after the Phase 32 core-claim code-record update and sanitization.
+- The anonymous ZIP rebuilt from that directory after the Phase 33 IEEE conference-template binding and sanitization.
 
 Package summary:
 
-- Files in inspect-only directory: 133.
+- Files in inspect-only directory: 136.
 - Exact ZIP bytes and SHA256 are recorded in the outer packaging report after rebuild. They are intentionally not embedded inside this file, because this file is part of the ZIP payload and would otherwise change the ZIP hash.
 
 Critical secret scan:
@@ -17,6 +17,7 @@ Critical secret scan:
 - No literal shared-password substrings found.
 - No private-key markers found.
 - No obvious high-entropy GitHub/OpenAI/Slack token prefixes found under tightened token patterns.
+- Curated source/text scan after Phase 33: PASS across 96 non-binary source/text files.
 - Rebuilt ZIP byte scan: PASS.
 - Broad key-name scans still find expected non-secret environment-variable and local-endpoint placeholder names in scripts and reports; these are listed below and are not credential values.
 
@@ -43,6 +44,7 @@ LaTeX clean-room build:
 - The rebuilt ZIP was extracted and built with `pdflatex -> bibtex -> pdflatex -> pdflatex`.
 - Output status: PASS, 12 pages.
 - The final LaTeX log has no overfull boxes, undefined citations/references, rerun prompts, errors, or fatal messages.
+- The LaTeX source uses the supplied IEEE conference template class file copied into `latex/IEEEtran.cls`.
 
 Conclusion:
 

@@ -62,9 +62,13 @@ Raw local project logs (`docs/RESTART.md`, `WORKLOG.md`, `DECISIONS.md`, `NEXT_S
 
 ## Paper Assets
 
-- `paper/icse2027/latex_ieee_20260529/main.tex`
-- `paper/icse2027/latex_ieee_20260529/references.bib`
-- `paper/icse2027/latex_ieee_20260529/main.pdf`
+- `paper/icse2027/latex_ieee_template_20260629/main.tex`
+- `paper/icse2027/latex_ieee_template_20260629/references.bib`
+- `paper/icse2027/latex_ieee_template_20260629/IEEEtran.cls`
+- `paper/icse2027/latex_ieee_template_20260629/main.pdf`
+- `paper/icse2027/submission_20260629_ieee_template/patchcourt_icse2027_research_track_submission_20260629_ieee_template.pdf`
+- `paper/icse2027/assets_20260629_template_format_phase33/phase33_ieee_template_format_report_20260629.md`
+- `paper/icse2027/assets_20260629_template_format_phase33/phase33_ieee_template_acceptance_audit_20260629.md`
 - `paper/icse2027/assets_20260622_quant_figures14/figures/*.pdf`
 - `paper/icse2027/assets_20260622_quant_figures14/figures/*.png`
 - `paper/icse2027/assets_20260622_quant_figures14/phase26_quant_figures_1_4_manifest_20260622.json`

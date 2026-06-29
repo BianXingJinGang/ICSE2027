@@ -1,15 +1,19 @@
-\documentclass[10pt,conference]{IEEEtran}
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
 \usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{xspace}
 \usepackage{url}
 \usepackage{listings}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \setlength{\textfloatsep}{7pt plus 1pt minus 2pt}
 \setlength{\floatsep}{7pt plus 1pt minus 2pt}
@@ -72,7 +76,7 @@ Repository-level LLM repair systems often use visible test success as an accepta
 In repository benchmarks, that signal can admit patches that satisfy public tests while leaving issue behavior unresolved.
 \patchcourt audits this acceptance gap.
 It turns visible-passing candidate patches into executable hypotheses, runs layered public probes, records behavioral-disagreement certificates, and freezes the certificate index before held-out labels are read.
-The frozen records are then calibrated against held-out FAIL\_TO\_PASS tests.
+The frozen records are then calibrated against held-out issue tests.
 We instantiate the protocol on a 50-task pilot with 200 candidate slots, 68 visible-passing candidates, and 37 raw certificates; the conservative certificate-producing path yields 30 task-level audit records, all executable under post-freeze held-out calibration.
 Within this selected path, 17/30 probe-accepted records become false acceptances and 26/30 retain specification-debt signals.
 Stronger issue-code or full-package probes preserve pass/fail disagreement in 6/10 selected upgrades, with another 6/10 package-level certificates in a separate upgrade set.

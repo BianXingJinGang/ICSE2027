@@ -25,6 +25,7 @@ Prepare an ICSE 2027 double-blind submission for PatchCourt, a gold-boundary-awa
 - Phase 30 structured patch-record listing: the compact edit-record block is replaced by a formal single-column listing with `file_path`, `insertions`, `deletions`, and `modifications` fields. This is presentation-only and does not change any count, task membership, or claim boundary.
 - Phase 31 subject-aligned patch-record listing: the formal listing is tightened around the Matplotlib all-NaN false-acceptance running case. The record carries the candidate edit, visible-pass status, full-package public-probe split, pass/fail BDC label, retain/specification-debt audit label, and post-freeze false-acceptance calibration. This is presentation-only and does not change any count, task membership, or claim boundary.
 - Phase 32 core-claim record: Figure 2 now directly names the paper's evidence object with `claim`, `accepted_by`, `pre_freeze`, `audit`, `post_freeze`, and `review_action` fields. This is presentation-only and does not change any count, task membership, or claim boundary.
+- Phase 33 IEEE conference-template binding: the manuscript is now built from the supplied IEEE conference template class using `\documentclass[conference]{IEEEtran}` and `\IEEEoverridecommandlockouts`. The active artifact LaTeX directory includes `IEEEtran.cls`, `main.tex`, `references.bib`, figures, and the 12-page PDF. This is format/packaging-only and does not change any count, task membership, or claim boundary.
 
 ## Independent-Source Stress Test
 
@@ -68,9 +69,10 @@ Not claimable:
 
 ## Validation Status
 
-- The active LaTeX submission draft is the IEEEtran lane copied into `latex/` inside this artifact package.
-- The active PDF is 12 pages after the Phase 32 core-claim code-record update, with an expanded 66-reference bibliography, a Running Example code panel, and a compact quantitative result summary.
+- The active LaTeX submission draft is the IEEE conference-template lane copied into `latex/` inside this artifact package.
+- The active PDF is 12 pages after the Phase 33 template binding, with an expanded 66-reference bibliography, a Running Example code panel, a compact quantitative result summary, and the core PatchCourt evidence-record listing.
 - The latest acceptance audit reports 103/103 with no heuristic warnings.
 - The Level 1 verifier now checks 44 metrics, including headline counts, source/probe stratification, pilot-50 drop reasons, selection-funnel values, and route-stability values.
 - The inspect-only artifact package is curated rather than a raw repository dump.
 - The artifact scan excludes literal shared passwords/private keys and flags author-identifying paths if they appear.
+- The rebuilt ZIP clean-room check passes: extracted source scan, Level 1 verifier, and LaTeX rebuild all succeed.
