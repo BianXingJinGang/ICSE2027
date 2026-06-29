@@ -8,8 +8,8 @@ Bind the active ICSE 2027 manuscript to the user-provided IEEE conference templa
 
 ## Template Sources
 
-- Word template archive: `C:/Users/Administrator/xwechat_files/wxid_m8xidlxvgjqp22_02f1/msg/file/2026-06/Conference-Templates-Word.zip`.
-- LaTeX template archive: `C:/Users/Administrator/xwechat_files/wxid_m8xidlxvgjqp22_02f1/msg/file/2026-06/conference-latex-template_10-17-19.zip`.
+- Word template archive: supplied collaborator IEEE conference Word template archive.
+- LaTeX template archive: supplied collaborator IEEE conference LaTeX template archive.
 - Extracted template reference directory: `paper/icse2027/assets_20260629_template_format_phase33/`.
 - Supplied LaTeX class copied into the active lane: `paper/icse2027/latex_ieee_template_20260629/IEEEtran.cls`.
 
