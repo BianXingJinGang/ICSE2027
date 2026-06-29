@@ -26,5 +26,6 @@ The verifier recomputes the headline table counts, selection funnel, route-stabi
 - `figures/patchcourt_quantitative_figure_manifest_20260622.json`: source-to-chart map for the quantitative figure pack.
 - `reports/phase31_subject_aligned_patch_record_report_20260628.md`: explains the subject-aligned Matplotlib ledger record added to the manuscript.
 - `reports/phase32_core_claim_code_record_report_20260629.md`: explains the Figure 2 record that directly encodes the visible-pass-is-not-oracle false-acceptance evidence chain.
+- `reports/phase34_code_cards_report_20260629.md`: explains the added SymPy and Seaborn/Qwen code-facing public-probe cards.
 
 PatchCourt is an audit and triage protocol, not a correctness oracle. The artifact is organized to make the selected certificate-producing path, candidate provenance, probe provenance, audit decisions, and post-freeze calibration inspectable.

@@ -17,8 +17,10 @@
 
 \setlength{\textfloatsep}{7pt plus 1pt minus 2pt}
 \setlength{\floatsep}{7pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{5pt plus 1pt minus 2pt}
+\setlength{\dblfloatsep}{5pt plus 1pt minus 2pt}
 \setlength{\intextsep}{7pt plus 1pt minus 2pt}
-\setlength{\abovecaptionskip}{3pt}
+\setlength{\abovecaptionskip}{2pt}
 \setlength{\belowcaptionskip}{0pt}
 
 \lstdefinestyle{patchcourtcode}{
@@ -307,7 +309,7 @@ Package-integrity splits describe import or API regression risk; issue correctne
 All-fail divergences are recorded separately from pass/fail behavioral certificates.
 Held-out failures enter only after the audit index is frozen.
 Post-disagreement overlays strengthen execution of already identified public behavior surfaces; they remain gold-blind and are reported as selected upgrade evidence.
-Table~\ref{tab:probe-provenance} makes the probe provenance explicit.
+Table~\ref{tab:probe-provenance} makes the probe provenance explicit, and Figure~\ref{fig:probe-code-cards} gives compact code-facing examples for an issue-code probe and an independent-source stress probe.
 
 \begin{table}[t]
 \caption{Probe provenance and timing. Held-out labels are read only after freeze.}
@@ -326,6 +328,37 @@ Held-out & After the frozen index is written. & Calibration label, never pre-fre
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure*}[t]
+\begin{minipage}[t]{0.49\textwidth}
+\begin{lstlisting}[style=patchcourtpatch]
+# SymPy-23117 issue-code reproducer
+from sympy import Array
+a = Array([])
+print("array", list(a))
+print("shape", a.shape)
+
+A/B/C: pass -> array []; shape (0,)
+D:     fail -> empty-shape ValueError
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\begin{lstlisting}[style=patchcourtpatch]
+# Seaborn-3407 Qwen stress probe
+probe: pairplot MultiIndex reproducer
+
+qwen sample q0:
+  pass -> axes_shape (4, 4)
+qwen samples q1..q4:
+  fail -> import or indexing path
+
+scope: one issue-specific Qwen BDC
+\end{lstlisting}
+\end{minipage}
+  \caption{Representative code-facing public probes. Left: an issue-code SymPy reproducer separates three passing candidates from one failing candidate. Right: the strongest Qwen issue-specific stress case separates one visible-pass sample that completes the public Seaborn reproducer from four visible-pass samples that fail.}
+  \Description{Two code-like probe panels. The SymPy panel constructs an empty Array and records three passing candidates and one empty-shape failure. The Seaborn panel records one Qwen sample passing with axes shape 4 by 4 and four Qwen samples failing through import or indexing paths.}
+  \label{fig:probe-code-cards}
+\end{figure*}
 
 \subsection{Behavior Signatures and Certificates}
 
@@ -573,6 +606,7 @@ Multi-sample generation over those visible-pass tasks produces a larger candidat
 
 Table~\ref{tab:claim-boundary} summarizes the supported inference for each evidence type.
 This lane is a partial-positive stress test: \patchcourt ingests a real non-Codex source and finds nonzero disagreement, while broad issue-specific reproduction remains unsupported by the observed yield.
+Figure~\ref{fig:probe-code-cards} shows the strongest issue-specific Qwen case as a code-facing public probe and normalized output split.
 
 \begin{table*}[t]
 \caption{Evidence scope by result type. Each row states the inference supported by the evidence and the main limit on interpretation.}
@@ -621,35 +655,23 @@ Each case links to the underlying certificate and table row for inspection.
 
 Seaborn-3407 is the strongest cross-source case.
 It appears in the main upgraded probe layer and is also the only Qwen issue/full-package pass/fail BDC after multi-sample generation.
-The issue-level package probe separates Qwen structured edits: one visible-passing sample drives pairplot construction to completion, while other visible-passing samples fail through import or dataframe-indexing paths.
-\emph{Evidence chain.}
-For this task/probe pair, the main-lane audit record reports three passing candidates, one failing candidate, and no timeouts; the passing group constructs a 4-by-4 axes grid.
-For the same probe, the Qwen record reports one passing candidate and four failing candidates.
-
-This case illustrates the mechanism behind the aggregate result.
-The certificate is formed from public behavior alone: visible tests admitted behaviorally incompatible hypotheses, and a stronger public probe exposed the split.
-As a single Qwen issue-specific case, it supports compatibility of the pipeline with an independent source without carrying a broad reproduction claim.
+The issue-level package probe separates visible-passing edits: the main lane reports three pass and one fail, and the Qwen lane reports one pass and four fail, with the passing group constructing the 4-by-4 axes grid shown in Figure~\ref{fig:probe-code-cards}.
+The certificate is formed from public behavior alone, so the case supports independent-source compatibility without carrying a broad Qwen reproduction claim.
 
 \subsection{Matplotlib All-NaN Bar Plot}
 
 Matplotlib-24149 links a full-package upgraded probe to a post-freeze held-out false acceptance.
 Visible tests accept candidates that differ on an all-NaN plotting edge case.
-After the routed Matplotlib build layer is available, the package-level probe separates candidate behavior, and the held-out run confirms false acceptance.
-The recorded split has three passing candidates, one failing candidate, and no timeouts.
-The passing group preserves one bar with a NaN coordinate, while the failing group exits through the Matplotlib axes stack.
-This is the clearest RQ1/RQ2 story: visible acceptance misses a compact boundary-condition behavior, and full-package probing exposes the risk before held-out labels are consulted.
-The certificate localizes the behavioral split; the false-acceptance label comes only from the later frozen held-out calibration.
+After routing repair, the package-level probe records three pass, one fail, and no timeouts: the passing group preserves one bar with a NaN coordinate, while the failing group exits through the Matplotlib axes stack.
+The certificate localizes the behavioral split; the false-acceptance label comes only from later frozen held-out calibration.
 
 \subsection{Scikit-Learn LabelEncoder Empty Transform}
 
 Scikit-Learn-10508 separates issue behavior from package-integrity risk.
 In the main lane, the LabelEncoder empty-transform reproducer yields a pass/fail certificate once compiled-extension/build routing is repaired.
 That record has three passing candidates, one failing candidate, and no timeouts; the passing group preserves an empty one-dimensional output, while the failing group hits a NumPy casting path.
-In the Qwen lane, however, issue-specific probes remain all-fail, while a separate package-integrity probe splits candidates on whether LabelEncoder can be imported and constructed.
-That integrity record reports two passing candidates and three failing candidates.
-\patchcourt records both facts but assigns them different evidentiary weights.
-Issue behavior and package integrity are adjacent but not interchangeable.
-That integrity split is therefore read as package-risk evidence.
+In the Qwen lane, issue-specific probes remain all-fail, while a package-integrity probe reports two pass and three fail on whether LabelEncoder can be imported and constructed.
+\patchcourt records both facts but treats the integrity split as package-risk evidence rather than issue-correctness evidence.
 
 \subsection{Django Semantic Split}
 
@@ -660,10 +682,8 @@ The later held-out label for the selected candidate is not false acceptance, so 
 \subsection{SymPy Issue-Code Layer}
 
 SymPy task 23117 demonstrates the issue-code layer.
-Some public reports contain compact executable snippets that can be run directly against candidate worktrees.
-\patchcourt treats these snippets as stronger than source-isolated templates but still below post-freeze held-out labels.
-The record has three passing candidates, one failing candidate, and no timeouts, with the passing group preserving an empty array result under the public snippet.
-This cheap, issue-tied layer provides stronger public evidence while remaining separate from held-out calibration.
+The public snippet in Figure~\ref{fig:probe-code-cards} yields three pass, one fail, and no timeouts, with the passing group preserving an empty array result.
+This cheap issue-tied layer is stronger than a source-isolated template while remaining separate from held-out calibration.
 
 \section{Related Work}
 
