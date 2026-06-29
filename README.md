@@ -1,4 +1,4 @@
-﻿# PatchCourt ICSE 2027 Package
+# PatchCourt ICSE 2027 Package
 
 This repository contains the sanitized ICSE 2027 submission package for PatchCourt, a protocol for auditing visible-test false acceptance in LLM-based repository repair.
 
@@ -23,7 +23,7 @@ Expected status: `PASS` with 44 checks.
 ## Current Package Hashes
 
 - Submission PDF SHA256: `ACD00E90E8A14AB2C1BECD5EDBAC46665C2E49E612EB7CA08498BB27D56836C3`
-- Inspect-only artifact ZIP SHA256: `C4CA94AD78E31DBAB8D476DDAF51F67E483C58D63A90906626D645863848045D`
+- Inspect-only artifact ZIP SHA256: `ED8A4A1266E294ED275C0BB483A446E568F8D9931EB914E3816D14ED8BD0137B`
 
 ## Claim Boundary
 
