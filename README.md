@@ -1,30 +1,37 @@
-# PatchCourt ICSE 2027 Package
+# PatchCourt
 
-This repository contains the sanitized ICSE 2027 submission package for PatchCourt, a protocol for auditing visible-test false acceptance in LLM-based repository repair.
+PatchCourt audits repository-repair patches that pass visible tests. The code
+keeps a frozen trail of candidate provenance, executable probes, behavior
+disagreement certificates, manual audit labels, and post-freeze calibration
+checks.
 
-## Contents
+This public repository is the code-and-data slice. The manuscript PDF, LaTeX
+source, submission ZIP, and figure build products are kept out of this upload.
 
-- `submission/patchcourt_icse2027_research_track_submission.pdf`: current submission-facing PDF.
-- `artifact/inspect_only/`: anonymous inspect-only artifact with scripts, tables, certificates, figures, reports, and LaTeX source.
-- `artifact/patchcourt_icse2027_anonymous_inspect_only.zip`: ZIP copy of the same inspect-only artifact.
-
-## Quick Verification
-
-From `artifact/inspect_only`, run:
+## Quick Check
 
 ```bash
+cd patchcourt
 python scripts/verify_level1_tables_20260528.py
 ```
 
-The verifier recomputes the headline table counts, selection funnel, route-stability values, and pilot-50 drop-reason checks from packaged CSV, JSON, JSONL, and Markdown files.
+The command recomputes the frozen headline checks from the packaged CSV, JSON,
+JSONL, and Markdown files. A clean run prints `PASS` for 44 checks and refreshes:
 
-Expected status: `PASS` with 44 checks.
+- `patchcourt/docs/LEVEL1_TABLE_REGENERATION_REPORT_20260528.md`
+- `patchcourt/generated/level1_table_recheck_20260528.json`
 
-## Current Package Hashes
+## What Is Here
 
-- Submission PDF SHA256: `ACD00E90E8A14AB2C1BECD5EDBAC46665C2E49E612EB7CA08498BB27D56836C3`
-- Inspect-only artifact ZIP SHA256: `87468C654BB64BD2C145E96CD0B5C3A27EF900F848F94B2142723949E7E3F346`
+- `patchcourt/scripts/`: candidate materialization, diff normalization, visible-test
+  execution, probe execution, BDC construction, ledger building, and table
+  verification scripts.
+- `patchcourt/tables/`: frozen result tables used by the verifier.
+- `patchcourt/certificates/`: JSONL certificate records used in the selected
+  audit path and Qwen stress lane.
+- `patchcourt/generated/`: verifier output.
+- `patchcourt/docs/`: short notes on data layout and claim scope.
 
-## Claim Boundary
-
-PatchCourt certificates are executable audit evidence for a selected certificate-producing path. They are not correctness oracles and should not be interpreted as population-wide rates over all SWE-bench tasks or all LLM-generated patches.
+Most checks use only the packaged files. The worker scripts that call external
+models or run repositories need the original experiment worktrees and runtime
+configuration.
