@@ -74,17 +74,17 @@
 \maketitle
 
 \begin{abstract}
-Repository-level LLM repair systems often use visible test success as an acceptance signal.
-In repository benchmarks, that signal can admit patches that satisfy public tests while leaving issue behavior unresolved.
-\patchcourt audits this acceptance gap.
-It turns visible-passing candidate patches into executable hypotheses, runs layered public probes, records behavioral-disagreement certificates, and freezes the certificate index before held-out labels are read.
-The frozen records are then calibrated against held-out issue tests.
-We instantiate the protocol on a 50-task pilot with 200 candidate slots, 68 visible-passing candidates, and 37 raw certificates; the conservative certificate-producing path yields 30 task-level audit records, all executable under post-freeze held-out calibration.
-Within this selected path, 17/30 probe-accepted records become false acceptances and 26/30 retain specification-debt signals.
+Repository-level LLM repair systems routinely stop when a candidate applies cleanly and visible tests pass.
+In issue-driven benchmarks, this stopping rule can leave an important question unresolved: several visible-passing patches may satisfy the same public tests while disagreeing on the behavior implied by the issue.
+\patchcourt audits this acceptance layer.
+It treats visible-passing patches as executable hypotheses, compares them with layered public probes, records behavioral-disagreement certificates, and freezes the certificate index before held-out labels are opened.
+Post-freeze calibration then measures how often these accepted-looking records fail held-out issue tests.
+In a 50-task pilot, 200 candidate slots produce 68 visible-passing candidates and 37 raw certificates; conservative filtering yields 30 task-level audit records, all executable under held-out calibration.
+Within this selected certificate-producing path, 17/30 probe-accepted records become false acceptances and 26/30 retain specification-debt signals.
 Stronger issue-code or full-package probes preserve pass/fail disagreement in 6/10 selected upgrades, with another 6/10 package-level certificates in a separate upgrade set.
-A local Qwen stress lane contributes one issue-specific and four package-integrity disagreement cases.
-The artifact regenerates the headline tables and links each count to auditable certificate records.
-The results support treating visible-test success as a trigger for pre-acceptance audit rather than an endpoint for repository-level LLM repair.
+A local Qwen stress lane adds one issue-specific and four package-integrity disagreement cases.
+The artifact regenerates the headline tables and links each count to certificate records.
+The results argue for shifting visible tests from a final repair endpoint to a pre-acceptance review trigger.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -92,44 +92,43 @@ repository-level repair, large language models, software testing, program repair
 \end{IEEEkeywords}
 \section{Introduction}
 
-Visible tests are an attractive acceptance signal.
+Visible tests are an attractive stopping rule.
 They are executable, cheap relative to full benchmark evaluation, and naturally available to repository-level repair agents during development.
 Modern repair systems can search files, edit code, run tests, and iterate until the visible command set passes.
-It is therefore tempting to treat visible-test success as a practical acceptance gate.
+The practical temptation is clear: if the patch applies and the visible commands pass, accept it.
 
 The difficulty is that visible success is a local observation over an incomplete behavioral surface.
 A visible-passing patch can satisfy the available tests while still violating the intended behavior of the public issue.
 Repository-level repair amplifies this ambiguity: the same issue can admit superficially plausible patches that modify different call paths, preserve different edge cases, or mask failures in different ways.
-Visible success therefore leaves an unresolved question about whether accepted candidates are behaviorally compatible.
+Visible success therefore leaves a question that is easy to miss during repair: did the acceptance step actually collapse the candidate space to behaviorally compatible fixes?
 
 Consider a Matplotlib issue involving bar plots whose inputs are all \texttt{NaN}.
 Several main-lane candidates reach the visible-pass pool.
 A full-package issue probe then separates the pool: three candidates preserve a single bar object with a \texttt{NaN} coordinate, while another exits through the Matplotlib axes stack.
-The developer patch is not needed to observe this split.
-The Matplotlib all-NaN bar-plot certificate records this split.
-The certificate says something narrower and auditable: visible tests admitted behaviorally incompatible hypotheses.
+No developer patch is needed to observe the split.
+The resulting certificate is deliberately modest: it records that visible tests admitted behaviorally incompatible hypotheses.
 
-\emph{False acceptance} names that failure mode.
-\patchcourt studies it at the acceptance layer: after candidate patches exist, before held-out labels are read, and under a gold-boundary-aware audit protocol.
-Its output is executable evidence that a visible-pass pool remains underspecified and should be reranked, reviewed, or abstained from.
+\emph{False acceptance} names the downstream failure of this acceptance step.
+\patchcourt studies it after candidate patches exist and before held-out labels are read.
+Its output is executable evidence that a visible-pass pool still contains unresolved behavior and should be inspected, reranked, or held back.
 
 The key constraint is the gold boundary.
 Before certificates are frozen, \patchcourt uses public issue text, public repository snapshots, public snippets or reproducer text, candidate diffs, visible commands, and probe outcomes.
 Developer patches, test patches, FAIL\_TO\_PASS labels, PASS\_TO\_PASS labels, and held-out outcomes enter only after the audit index is frozen.
 This separation lets us ask whether pre-freeze evidence anticipates post-freeze false acceptance.
 
-The selected-path study uses a frozen 30-certificate audit set drawn from SWE-bench-style repository repair tasks after visible-pass and pre-freeze public-probe evidence are available.
-Thus our estimand is conditional: among tasks that already produced conservative pre-freeze disagreement certificates, how often does visible/probe acceptance remain unsafe under post-freeze held-out calibration?
+The study uses a frozen 30-certificate audit set drawn from SWE-bench-style repository repair tasks after visible-pass and pre-freeze public-probe evidence are available.
+The estimand is therefore conditional on a certificate-producing path: among auditable tasks that already expose conservative pre-freeze behavioral disagreement, how often does visible/probe acceptance fail held-out calibration?
 Within that selected path, all 30 held-out calibrations execute, and 17 of 30 visible/probe-accepted cases fail held-out FAIL\_TO\_PASS tests.
 Stronger issue-code and full-package probes show that the signal extends beyond source-isolated templates for selected targets.
-The same evidence also sets its scope: some certificates survive calibration, raw disagreement scores alone remain under-calibrated, and the independent-source Qwen lane contributes stress evidence rather than a broad reproduction result.
+The same evidence also fixes the interpretation: the paper measures a high-risk, auditable acceptance regime; raw disagreement scores remain under-calibrated; and the Qwen lane is used as a stress test of candidate-source compatibility.
 
 The contributions are:
 \begin{itemize}[leftmargin=*]
-\item We characterize visible-test false acceptance for repository-level LLM repair within a selected certificate-producing path under a frozen, post-freeze held-out calibration protocol.
-\item We present \patchcourt, a gold-boundary-aware audit protocol that records executable disagreement evidence before evaluation labels are read.
-\item We evaluate layered probes, separating source-isolated templates, issue-code probes, full-package issue probes, package-integrity checks, and post-freeze held-out calibration.
-\item We report the scope of the evidence: small-sample triage signals act as review cues, and Qwen contributes an independent-source stress test with limited issue-specific yield.
+\item a characterization of visible-test false acceptance within a selected certificate-producing path under frozen, held-out calibration;
+\item the \patchcourt protocol, which records executable disagreement evidence before evaluation labels are read;
+\item a layered probe evaluation that separates source-isolated templates, issue-code probes, full-package issue probes, package-integrity checks, and held-out calibration;
+\item a triage and candidate-source stress analysis, including a local Qwen lane with low issue-specific but nonzero disagreement yield.
 \end{itemize}
 
 \section{Background and Problem}
@@ -162,8 +161,7 @@ It compares candidate behaviors against public probes and other candidate hypoth
 \subsection{Running Example}
 
 Figure~\ref{fig:running-example} gives the compact quantitative shape behind the opening Matplotlib case.
-The probe is not a generated hidden test and does not assert that one candidate is globally correct.
-It is a public, issue-facing measurement that asks whether a visible-passing patch preserves the behavior implied by the reported edge case.
+The probe is a public, issue-facing measurement of the reported edge case.
 When the same probe is run across the visible-pass candidate pool, three candidates keep one bar whose height remains \texttt{NaN}, while one candidate fails through the Matplotlib axes stack.
 This split is the certificate: a cheap, executable record that visible tests admitted incompatible hypotheses before any held-out label was read.
 
@@ -171,7 +169,7 @@ This split is the certificate: a cheap, executable record that visible tests adm
   \centering
   \includegraphics[width=\columnwidth]{figures/patchcourt_running_example_20260622.pdf}
   \caption{Quantitative running example for a full-package public probe. All four visible-passing candidates pass visible tests; the public probe splits them into three probe-pass candidates and one probe-fail candidate before any held-out label is read.}
-  \Description{A Matplotlib public probe outcome chart: four visible-passing candidates enter, three pass the public probe, one fails it, and the certificate is marked as a pass/fail behavior split rather than a correctness oracle.}
+  \Description{A Matplotlib public probe outcome chart: four visible-passing candidates enter, three pass the public probe, one fails it, and the certificate is marked as a pass/fail behavior split.}
 \label{fig:running-example}
 \end{figure}
 
@@ -270,10 +268,9 @@ This formalization treats a certificate as evidence of unresolved public behavio
 \subsection{Candidate Generation and Visible Filtering}
 
 \patchcourt ingests candidate diffs from multiple lanes.
-Main evidence uses two recorded candidate-source lanes: an interactive model-generated lane and a project-controlled batch lane.
-Inspection provenance is preserved in the artifact; both lanes are treated as project-controlled sources rather than independently authenticated external-model baselines.
-The independent-source stress test uses a locally served Qwen2.5-Coder model with structured search/replace generation.
-Table~\ref{tab:candidate-provenance} records the source provenance used by the paper-facing claims.
+The frozen path uses an interactive model-generated lane and a project-controlled batch lane; both keep candidate provenance so every certificate can be traced back to its source.
+The separate stress lane uses a locally served Qwen2.5-Coder model with structured search/replace generation.
+Table~\ref{tab:candidate-provenance} records how each lane enters the claims.
 
 \begin{table*}[t]
 \caption{Candidate-source provenance for paper-facing claims.}
@@ -282,11 +279,11 @@ Table~\ref{tab:candidate-provenance} records the source provenance used by the p
 \scriptsize
 \begin{tabularx}{\textwidth}{p{0.24\textwidth}rXX}
 \toprule
-Lane & Frozen & Candidate evidence & Scope \\
+Lane & Frozen & Candidate evidence & Use in claims \\
 \midrule
-Interactive model-generated lane & 7 & Model patch evidence; thirteen certificates before conservative deduplication. & Project-controlled candidate source used for the selected path. \\
-Project-controlled batch lane & 23 & Calibration diversity with source provenance preserved in the artifact. & Main selected-path source; external-model independence is not attributed to this lane. \\
-Open-source Qwen stress lane & 0 & Structured multi-sample edits yield visible-pass candidates and disagreement evidence. & Separate non-Codex stress test reported outside the frozen 30. \\
+Interactive model-generated lane & 7 & Model patch evidence; thirteen certificates before conservative deduplication. & Part of the selected certificate-producing path. \\
+Project-controlled batch lane & 23 & Additional calibration diversity with source provenance preserved in the artifact. & Main selected-path source, reported as project-controlled candidate evidence. \\
+Open-source Qwen stress lane & 0 & Structured multi-sample edits yield visible-pass candidates and disagreement evidence. & Separate non-Codex stress test, reported outside the frozen 30. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -305,10 +302,10 @@ Environment routing is per task because repository-level benchmarks include old 
 \emph{held-out calibration}, which runs evaluation-only labels after freeze.
 
 This layering keeps each observation tied to the behavior it actually exercises.
-Package-integrity splits describe import or API regression risk; issue correctness requires issue-code, full-package issue probes, or held-out calibration.
+Package-integrity splits describe import or API regression risk; issue behavior is measured with issue-code, full-package issue probes, or held-out calibration.
 All-fail divergences are recorded separately from pass/fail behavioral certificates.
 Held-out failures enter only after the audit index is frozen.
-Post-disagreement overlays strengthen execution of already identified public behavior surfaces; they remain gold-blind and are reported as selected upgrade evidence.
+Post-disagreement overlays strengthen execution on already identified public behavior surfaces and are reported as selected upgrade evidence.
 Table~\ref{tab:probe-provenance} makes the probe provenance explicit, and Figure~\ref{fig:probe-code-cards} gives compact code-facing examples for an issue-code probe and an independent-source stress probe.
 
 \begin{table}[t]
@@ -318,11 +315,11 @@ Table~\ref{tab:probe-provenance} makes the probe provenance explicit, and Figure
 \scriptsize
 \begin{tabularx}{\columnwidth}{lXX}
 \toprule
-Layer & Timing & Role and scope \\
+Layer & Timing & Interpretation \\
 \midrule
-Source-isolated & Post-issue and pre-held-out; often after candidate-context materialization, before calibration labels. & Discovery/spec-debt signal only; cheap and issue-facing but not package behavior. \\
-Issue-code & Public snippet exists pre-candidate; adaptation/routing may be post-disagreement, still gold-blind. & Stronger issue-tied evidence; selected overlays remain subset evidence. \\
-Full-package & Mostly post-disagreement audit-upgrade overlay for selected targets, before label reading. & Main robustness check for selected certificates, not an unbiased discovery denominator. \\
+Source-isolated & Post-issue and pre-held-out; often after candidate-context materialization, before calibration labels. & Cheap issue-facing discovery signal; it flags specification debt before package execution is available. \\
+Issue-code & Public snippet exists pre-candidate; adaptation/routing may be post-disagreement, still gold-blind. & Issue-tied execution evidence for selected records. \\
+Full-package & Mostly post-disagreement audit-upgrade overlay for selected targets, before label reading. & Robustness check for selected certificates under repository package execution. \\
 Integrity & Post-Qwen visible-pass layer. & Regression/API-preservation evidence. \\
 Held-out & After the frozen index is written. & Calibration label, never pre-freeze probe. \\
 \bottomrule
@@ -352,7 +349,7 @@ qwen sample q0:
 qwen samples q1..q4:
   fail -> import or indexing path
 
-scope: one issue-specific Qwen BDC
+evidence: one issue-specific Qwen BDC
 \end{lstlisting}
 \end{minipage}
   \caption{Representative code-facing public probes. Left: an issue-code SymPy reproducer separates three passing candidates from one failing candidate. Right: the strongest Qwen issue-specific stress case separates one visible-pass sample that completes the public Seaborn reproducer from four visible-pass samples that fail.}
@@ -373,29 +370,28 @@ All-fail behavioral divergences are diagnostic and reported separately.
 The frozen set contains 30 task-level certificates.
 Certificate audit labels each record as retain, downgrade, or reject; the frozen pass yields 22 retain, 8 downgrade, and 0 reject.
 After freeze, \patchcourt runs held-out FAIL\_TO\_PASS calibration and records false acceptance.
-This structured pass covers the 30 conservative records and occurs before held-out labels are read.
-It was not blind to probe layer or candidate source, because those fields determine the evidence boundary; it was blind to held-out outcomes.
-Inter-rater reliability is therefore outside the claim.
-The artifact instead exposes stable certificate links, pass/fail behavior, audit rationales, downgrade reasons, and selected calibration candidates.
+The audit saw probe layer and candidate source because those fields determine what each certificate can support; held-out outcomes remained hidden until the index was frozen.
+The result is a transparent single-pass audit; inter-rater reliability remains a validity threat.
+The artifact exposes stable certificate links, pass/fail behavior, audit rationales, downgrade reasons, and selected calibration candidates.
 The rubric is deliberately conservative:
 retain means that the probe is issue-relevant or strongly issue-adjacent, gold-blind, visible-pass-backed, and behaviorally meaningful;
 downgrade means that the certificate remains useful but has a source-isolated, all-fail, routing, or missing-full-package caveat;
 reject means that the record is not issue-relevant, not reproducible, not gold-blind, or not backed by visible-pass candidates.
-No record in the frozen 30 was rejected because the freeze input had already filtered to conservative pass/fail records; weaker surviving cases were marked as downgrades rather than silently dropped.
-Examples make the single-pass audit inspectable: retained Matplotlib and Seaborn records expose issue/full-package pass/fail behavior on visible-pass candidates, while downgraded Matplotlib and Sphinx records stay in the index with source-isolated, routing, or missing-upgrade caveats.
+The frozen input had already filtered to conservative pass/fail records, so no record in the frozen 30 met the reject criteria; weaker surviving cases were marked as downgrades.
+The single-pass audit is made inspectable through examples: retained Matplotlib and Seaborn records expose issue/full-package pass/fail behavior on visible-pass candidates, while downgraded Matplotlib and Sphinx records remain in the index with source-isolated, routing, or missing-upgrade caveats.
 
 \patchcourt computes candidate-conditional oracle-gap lower bound (\ccogb), a specification-debt indicator, audit-weighted risk, and abstention rules.
-\ccogb is reported as a lower-bound signal rather than a correctness probability.
+\ccogb is reported as a lower-bound risk signal.
 It summarizes unresolved behavior mass within the accepted candidate pool.
 Specification debt records reasons to keep a certificate under review, such as source-isolated status, downgraded audit, missing full-package validation, or all-fail divergence.
 
 \subsection{The Freeze-and-Calibrate Protocol}
 
-The empirical denominator is produced by this protocol, not chosen after calibration.
-\patchcourt begins from a 50-task pilot and admits a paper-facing record only when four conditions hold: at least one visible-pass candidate exists; a gold-blind public probe separates visible-pass candidates; the audit record can be traced to a task, probe, source lane, and route; and the selected calibration candidate can be executed after freeze.
+The empirical denominator is produced by this protocol before calibration.
+\patchcourt begins from a 50-task pilot and admits a paper-facing record when four conditions hold: at least one visible-pass candidate exists; a gold-blind public probe separates visible-pass candidates; the audit record can be traced to a task, probe, source lane, and route; and the selected calibration candidate can be executed after freeze.
 This yields 30 task-level records in the conservative certificate-producing path.
 The choice favors fully auditable rows over prevalence coverage: every row has a certificate, probe provenance, candidate-source provenance, audit status, route record, selected candidate, and held-out outcome.
-The paper therefore reports Wilson intervals and treats $\widehat{\theta}_S$ as a selected-path estimand rather than a population-wide SWE-bench rate.
+Wilson intervals are reported for $\widehat{\theta}_S$, the selected-path estimand.
 
 \section{Research Questions and Setup}
 
@@ -405,15 +401,14 @@ The paper therefore reports Wilson intervals and treats $\widehat{\theta}_S$ as 
 
 \textbf{RQ3 (triage calibration).} Do pre-freeze signals provide calibrated triage, or only exploratory review cues?
 
-\textbf{RQ4 (independent-source stress test).} What does a real independent Qwen source reveal about the supported scope of the evidence?
+\textbf{RQ4 (independent-source stress test).} What changes when candidate patches come from a locally served Qwen model?
 
 \subsection{Dataset and Freeze}
 
 The selected-path study uses a frozen 30-certificate audit set built from a 50-task SWE-bench-style pilot.
 The pilot was selected to stress repository-level repair conditions that matter for acceptance audit: visible commands, real package environments, issue text, candidate patches, and executable public probes.
 From that pilot, the paper-facing denominator keeps only conservative task-level records that pass the freeze-and-calibrate protocol described above.
-This choice is deliberate.
-It makes each row checkable enough for an ICSE artifact review, while keeping the rate tied to the selected certificate-producing path.
+This design makes each row checkable enough for an ICSE artifact review and keeps the rate tied to the selected certificate-producing path.
 
 The unit of analysis is one frozen task-level certificate record, not an individual model sample, repository family, or benchmark issue pool.
 Each record stores the task, public probe, selected candidate, source lane, evidence layer, audit status, routing summary, and post-freeze held-out outcome.
@@ -449,13 +444,13 @@ Layer & Before routing repair & Paper-facing use \\
 Held-out FAIL\_TO\_PASS & 15/30 executable & 30/30 executable in Table~\ref{tab:heldout}. \\
 Main probe upgrades & 2/10 upgraded BDC targets & 6/10 pass/fail full-package or issue-code BDC targets. \\
 Frozen audit index & 30 conservative records & Unchanged source of truth for calibration. \\
-Independent-source gate & Qwen stress lane only & Batch candidates remain project-controlled rather than an external-model baseline. \\
+Independent-source gate & Qwen stress lane only & Batch candidates remain project-controlled evidence. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \begin{table}[t]
-\caption{Cost and overhead summary for the paper-facing layers. The table reports work units and execution counts rather than machine-specific wall-clock minutiae.}
+\caption{Cost and overhead summary for the paper-facing layers. The table reports work units and execution counts.}
 \label{tab:overhead}
 \centering
 \scriptsize
@@ -480,7 +475,7 @@ Upgrade non-BDC targets before / after repair & 8/10 to 4/10 & Remaining failure
 We report held-out executability, held-out false-acceptance count and Wilson interval, specification-debt count, pass/fail BDC yield under upgraded probes, correlation and rerank scores, abstention coverage, and independent-source applicability.
 All primary proportions use Wilson 95\% intervals.
 For RQ3, random-review precision uses the hypergeometric baseline implied by 17 false acceptances among the 30 records in the selected certificate-producing path: expected precision is 0.567 at any fixed review budget, with central 95\% random intervals of [0.30, 0.80] at $k=10$ and [0.45, 0.70] at $k=20$.
-Ranking and correlation results are therefore treated as preliminary triage evidence rather than calibrated prediction.
+Ranking and correlation results are reported as preliminary triage evidence.
 
 \section{Results}
 
@@ -505,7 +500,7 @@ False acceptance remains common after certificate audit: retained records have 1
 Specification debt is a conservative high-coverage signal in this set: all 17 false acceptances are in the specification-debt-present stratum, while the four debt-absent records have zero false acceptances.
 
 \begin{table}[t]
-\caption{Frozen held-out calibration after the certificate index is frozen. The set is selected, not a SWE-bench population estimate.}
+\caption{Frozen held-out calibration after the certificate index is frozen.}
 \label{tab:heldout}
 \centering
 \begin{tabular}{lr}
@@ -530,7 +525,7 @@ Spec-debt-absent false-acceptance rate & 0/4 \\
 
 \noindent\textbf{Finding 1.}
 Table~\ref{tab:heldout} shows that visible/probe acceptance leaves substantial residual risk in the selected frozen audit set.
-The claim is not that all visible-passing patches are wrong, but that visible/probe acceptance is an unsafe endpoint without additional audit evidence.
+On this path, visible/probe acceptance is a risky endpoint unless the residual public behavior is inspected.
 
 \subsection{RQ2: Stronger Probe Validation}
 
@@ -557,15 +552,15 @@ Qwen package-integrity probes & 11 visible-pass tasks & 4 & Integrity positives 
 
 \noindent\textbf{Finding 2.}
 Table~\ref{tab:upgrades} shows that selected certificates can survive issue-code and full-package upgrades, extending the evidence beyond source-isolated templates.
-However, upgrade results remain a selected subset, and all-fail divergence must remain separate from pass/fail BDC counts.
+The upgraded subset is small, so pass/fail BDCs and all-fail divergences are reported as separate evidence types.
 
 \subsection{RQ3 Triage Signals}
 
 Table~\ref{tab:triage} shows that raw \ccogb alone is under-calibrated in the frozen 30-task table.
 Specification debt and audit-weighted risk provide modest review-budget signals: audit-weighted risk increases precision@10 from 0.400 to 0.600 and precision@20 from 0.550 to 0.650 relative to raw \ccogb.
-Against a random-review baseline, however, these values remain inside the finite-sample random intervals, so the evidence justifies triage exploration rather than a calibrated ranking claim.
+These values remain inside the finite-sample random intervals around random review, so the signal is best read as a review cue at this sample size.
 The specification-debt abstention rule is conservative and high coverage: it abstains on 26/30 tasks and captures all 17 false acceptances in the selected certificate-producing path.
-Such a rule is too broad to be a production policy by itself, but it usefully shows that the ledger can drive explicit risk-control decisions.
+The rule is broad, but it shows that the ledger can drive explicit risk-control decisions.
 
 \begin{table}[t]
 \caption{Triage and abstention. Random review has expected P@10/P@20 of 0.567/0.567; central 95\% random intervals are [0.30, 0.80] at $k=10$ and [0.45, 0.70] at $k=20$.}
@@ -597,7 +592,7 @@ Specification debt is conservative and high coverage, while the broad abstention
 
 \subsection{Independent Qwen Stress Test}
 
-The independent-source experiment asks how far the evidence pipeline carries when candidate patches come from a truly non-Codex local model source.
+The independent-source experiment asks how far the evidence pipeline carries when candidate patches come from a non-Codex local model source.
 
 Naive diff generation with Qwen rarely reaches the apply-and-visible-pass gate in a form that can yield certificate evidence.
 Structured search/replace generation improves applicability and creates a visible-pass stress pool.
@@ -605,51 +600,50 @@ On the frozen set, structured generation yields applyable candidates for 17 task
 Multi-sample generation over those visible-pass tasks produces a larger candidate pool, but issue-specific pass/fail disagreement remains rare.
 
 Table~\ref{tab:claim-boundary} summarizes the supported inference for each evidence type.
-This lane is a partial-positive stress test: \patchcourt ingests a real non-Codex source and finds nonzero disagreement, while broad issue-specific reproduction remains unsupported by the observed yield.
+This lane is a partial-positive stress test: \patchcourt ingests a real non-Codex source and finds nonzero disagreement, while the observed issue-specific yield remains low.
 Figure~\ref{fig:probe-code-cards} shows the strongest issue-specific Qwen case as a code-facing public probe and normalized output split.
 
 \begin{table*}[t]
-\caption{Evidence scope by result type. Each row states the inference supported by the evidence and the main limit on interpretation.}
+\caption{Evidence reading by result type.}
 \label{tab:claim-boundary}
 \centering
 \begin{tabularx}{\textwidth}{lXX}
 \toprule
-Evidence type & Supported inference & Main limit \\
+Evidence type & Supported inference & Reading condition \\
 \midrule
-Frozen held-out calibration (17/30 false acceptance; 26/30 spec debt) & Visible/probe acceptance often fails held-out labels in the selected certificate-producing path. & Selected-path rate, not a SWE-bench-wide population estimate or patch-correctness judgment. \\
-Main and extra probe upgrades (6/10 and 6/10 pass/fail) & Stronger full-package or issue-code probes preserve disagreement for selected targets. & Evidence for selected targets rather than a calibrated predictor for every task. \\
-Qwen issue-specific pass/fail BDC (1 task) & A single independent-source issue-specific compatibility case; strongest case is Seaborn MultiIndex pairplot. & Limited yield, so broad Qwen reproduction remains unsupported. \\
-Qwen package-integrity BDCs (4 tasks) & Independent-source visible-pass patches can break or preserve full-package behavior differently. & Integrity/regression evidence rather than issue-correctness evidence. \\
-Qwen all-fail divergences and rescue negatives & Diagnostic behavior diversity and a documented negative result. & No added positive pass/fail BDC yield. \\
+Frozen held-out calibration (17/30 false acceptance; 26/30 spec debt) & Visible/probe acceptance often fails held-out labels in the selected certificate-producing path. & Conditional on the frozen selected path. \\
+Main and extra probe upgrades (6/10 and 6/10 pass/fail) & Stronger full-package or issue-code probes preserve disagreement for selected targets. & Evidence for selected upgrade targets. \\
+Qwen issue-specific pass/fail BDC (1 task) & A single independent-source issue-specific compatibility case; strongest case is Seaborn MultiIndex pairplot. & Low observed issue-specific yield. \\
+Qwen package-integrity BDCs (4 tasks) & Independent-source visible-pass patches can break or preserve full-package behavior differently. & Integrity/regression reading. \\
+Qwen all-fail divergences and rescue negatives & Diagnostic behavior diversity and a documented negative result. & Negative applicability evidence. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
 
-\noindent\textbf{Qwen scope.}
+\noindent\textbf{Qwen stress lane.}
 Structured generation turns an applicability failure into a visible-pass multi-sample pool.
 The retained evidence consists of one issue-specific pass/fail certificate and four package-integrity certificates.
-Raw generation and applicability counts are preserved in the artifact rather than treated as main-paper claims.
+Raw generation and applicability counts are preserved in the artifact as diagnostic evidence.
 
 Figure~\ref{fig:quant-summary} consolidates the main result denominators after the RQ-specific tables.
 Panel A shows the selected-path calibration rates and Wilson intervals.
 Panel B separates pass/fail upgrade yield from other disagreement and no-BDC outcomes.
 Panel C records the routing repairs that made calibration and upgrade execution complete enough for the paper-facing tables.
-Panel D shows why reranking remains a boundary analysis: the best review cue improves over raw \ccogb, but the finite-sample random baseline remains close.
+Panel D shows the reranking result: the best review cue improves over raw \ccogb, but the finite-sample random baseline remains close.
 The artifact contains the corresponding single-purpose plots for calibration rates, probe-upgrade yield, source/layer mix, route stability, rerank/abstain, Qwen yield, and repository-level outcome distribution.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/patchcourt_quantitative_summary_20260622.pdf}
-  \caption{Quantitative result summary. Panel A reports selected-path calibration rates with Wilson 95\% intervals. Panel B reports pass/fail BDC yield by probe layer and keeps Qwen issue and integrity evidence separated. Panel C shows routing repairs without changing the frozen audit index. Panel D summarizes rerank precision as boundary evidence rather than a calibrated predictor.}
+  \caption{Quantitative result summary. Panel A reports selected-path calibration rates with Wilson 95\% intervals. Panel B reports pass/fail BDC yield by probe layer and keeps Qwen issue and integrity evidence separated. Panel C shows routing repairs without changing the frozen audit index. Panel D summarizes rerank precision against the random-review reference.}
   \Description{Four-panel quantitative summary: selected-path calibration bars with confidence intervals; probe-upgrade stacked yield bars; route-stability before and after bars; and triage precision lines against a random-review expectation.}
   \label{fig:quant-summary}
 \end{figure*}
 
 \section{Qualitative Cases}
 
-The following cases ground the aggregate tables in certificate-level evidence.
-They connect the table-level claims in Tables~\ref{tab:heldout}--\ref{tab:claim-boundary} to artifact audit rows.
-Each case links to the underlying certificate and table row for inspection.
+The following cases put the aggregate tables back into certificate-level behavior.
+Each case links a table-level result to an inspectable audit row.
 Code-facing evidence appears in Figures~\ref{fig:structured-patch-record}, \ref{fig:probe-code-cards}, and \ref{fig:django-code-card}.
 
 \subsection{Seaborn MultiIndex Pairplot}
@@ -671,7 +665,7 @@ The certificate localizes the behavioral split; the false-acceptance label comes
 Scikit-Learn-10508 separates issue behavior from package-integrity risk.
 In the main lane, the LabelEncoder empty-transform reproducer yields a pass/fail certificate once compiled-extension/build routing is repaired.
 The record has three pass, one fail, and no timeouts: the passing group preserves an empty one-dimensional output, while the failing group hits a NumPy casting path.
-In the Qwen lane, issue-specific probes remain all-fail, while a package-integrity probe reports two pass and three fail on whether LabelEncoder can be imported and constructed; \patchcourt treats that split as package-risk evidence rather than issue-correctness evidence.
+In the Qwen lane, issue-specific probes remain all-fail, while a package-integrity probe reports two pass and three fail on whether LabelEncoder can be imported and constructed; \patchcourt records that split as package-risk evidence.
 
 \subsection{Django Semantic Split}
 
@@ -688,10 +682,10 @@ A/B/C: pass -> "alpha\nbeta"
 D:     fail -> escaped separator assertion
 
 certificate: pass/fail BDC before freeze
-boundary: semantic split, not hidden-test oracle
+evidence: semantic split before held-out labels
 \end{lstlisting}
   \caption{Code-facing Django case probe. The public full-package probe splits three visible-passing candidates that preserve separator behavior from one that escapes it.}
-  \Description{A compact code-like Django probe card showing render_join with autoescape disabled, three passing candidates preserving alpha newline beta, one failing candidate with an escaped separator assertion, and a boundary note that the certificate is not a hidden-test oracle.}
+  \Description{A compact code-like Django probe card showing render_join with autoescape disabled, three passing candidates preserving alpha newline beta, one failing candidate with an escaped separator assertion, and an evidence note that the semantic split is recorded before held-out labels.}
   \label{fig:django-code-card}
 \end{figure}
 
@@ -725,8 +719,8 @@ Recent ICSE work revisits APR in the LLM era through code-language-model impact,
 Recent SWE-bench correctness work asks whether benchmark-accepted issues are genuinely fixed and uses PatchDiff to compare generated patches against human-written ground-truth patches \cite{wang2025swebenchcorrectness}.
 Diagnostic benchmark work studies whether strong SWE-bench performance may reflect memorization or benchmark exposure rather than issue reasoning \cite{liang2025illusion,jain2025livecodebench}.
 These studies challenge the meaning of a benchmark pass after evaluation.
-\patchcourt instead freezes an evidence ledger before developer patches, hidden tests, or stronger labels enter the process, then uses held-out calibration to measure alignment with later failure.
-The claim is weaker than retrospective correctness judgment, but it is available at the acceptance boundary.
+\patchcourt takes a prospective route: it freezes an evidence ledger before developer patches, hidden tests, or stronger labels enter the process, then uses held-out calibration to measure alignment with later failure.
+The payoff is an acceptance-time signal that can be inspected before benchmark answers are opened.
 
 \subsection{Generated Tests, Oracles, and Validation}
 
@@ -734,7 +728,7 @@ Generated tests can strengthen repair validation, but they face the test oracle 
 Classic testing work developed feedback-directed random testing, symbolic execution, dynamic test generation, and mutation-analysis foundations for exposing untested behavior \cite{godefroid2005dart,sen2005cute,cadar2008klee,pacheco2007feedback,fraser2011evosuite,jia2011mutation}.
 Search-based and LLM-based testing studies continue this line with generated tests, bug reproduction, and execution feedback \cite{lemieux2023codamosa,kang2023fewshot,chen2023codet,liu2023evalplus,ahmed2026heterogeneous,shin2026retrieval,li2026knowledge}.
 Oracle-generation work, including TOGA, neural-oracle evaluations, and TOGLL, studies when automated or LLM-produced assertions become correct and strong enough for testing \cite{barr2015oracle,pezzezhang2014oracles,dinella2022toga,hossain2023neuraloracle,hossain2025togll}.
-\patchcourt treats probes as evidence-producing instruments rather than as generated oracle labels.
+\patchcourt treats probes as evidence-producing instruments whose strength depends on provenance and execution layer.
 Their evidentiary weight depends on the layer: source-isolated, issue-code, full-package issue, package-integrity, or post-freeze held-out calibration.
 
 \section{Threats to Validity}
@@ -747,7 +741,7 @@ The rubric still relies on human judgment; certificate links, pass/fail behavior
 
 \textbf{Construct validity.}
 \bdcs localize public behavioral disagreement, while \ccogb summarizes a candidate-conditional lower-bound signal.
-All-fail divergence is weaker than pass/fail disagreement, and package-integrity probes measure regression or API preservation rather than issue behavior; the tables keep those evidence types separate.
+All-fail divergence is weaker than pass/fail disagreement, and package-integrity probes measure regression or API preservation; the tables keep those evidence types separate from issue behavior.
 
 \textbf{External validity.}
 The main calibration set contains 30 frozen certificates selected through an audit pipeline.
@@ -758,16 +752,16 @@ The selection funnel in Figure~\ref{fig:selection-funnel} is included to make th
 \textbf{Conclusion validity.}
 The correlation, rerank, and abstain results are small-$N$ and preliminary.
 Specification debt performs strongly in this table, but the pattern may reflect the selected certificate set.
-The triage results are practical evidence for review prioritization rather than a validated predictor.
+The triage results are an early review-prioritization signal, with predictor validation left to larger sets.
 
 \textbf{Independent-source validity.}
-One issue-specific pass/fail BDC and four package-integrity BDCs make the Qwen lane a stress test with limited issue-specific yield.
+One issue-specific pass/fail BDC and four package-integrity BDCs make the Qwen lane a stress test with low issue-specific yield.
 The direct-diff Qwen run remains a negative baseline, and the project-controlled batch lane remains separate from an authenticated external-model baseline.
 
 \textbf{Gold-boundary validity.}
-\patchcourt's strongest design claim is the pre-freeze/post-freeze separation.
+\patchcourt's main design invariant is the pre-freeze/post-freeze separation.
 The artifact must keep this separation inspectable.
-If any future experiment uses developer patches, test patches, FAIL\_TO\_PASS, or PASS\_TO\_PASS before freeze, it must be excluded from the main gold-boundary claim.
+Any future experiment that consults developer patches, test patches, FAIL\_TO\_PASS, or PASS\_TO\_PASS before freeze should be reported as a separate retrospective analysis.
 
 \section{Artifact}
 
@@ -798,7 +792,7 @@ Stronger issue-code or full-package upgrades preserve pass/fail disagreement in 
 The Qwen stress lane demonstrates source compatibility with one issue-specific and four package-integrity disagreement cases, while keeping the main claim anchored in the audited frozen path.
 
 The broader implication is operational.
-Visible tests should trigger inspection, reranking, or abstention when public executable evidence shows unresolved behavior; they should not be the final oracle for accepting repository-level repairs.
+When public executable evidence still shows unresolved behavior, visible tests should trigger inspection, reranking, or abstention before a repository-level repair is accepted.
 Future work should expand the selected path across more repositories and model sources, add multi-rater audit, and integrate certificate evidence into repair agents before deployment-time acceptance decisions.
 \bibliographystyle{IEEEtran}
 \bibliography{references}
